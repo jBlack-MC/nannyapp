@@ -1,0 +1,341 @@
+/* Home page master layout styles */
+.home-main {
+    width: 100%;
+    max-width: 100%;
+    padding-top: calc(var(--topbar-h, 78px) + 8px);
+    padding-inline: 0;
+}
+.home-page {
+    background: var(--bg, #f8fafc);
+}
+.home-hero {
+    position: relative;
+    min-height: 86vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.home-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.85), rgba(15, 23, 42, 0.92));
+    z-index: 0;
+}
+.home-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url('../img/hero-nanny-SMceVYR7.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: 0;
+}
+.home-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 28px;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+}
+.home-hero-copy h1,
+.home-hero-copy p {
+    color: #fff;
+}
+.home-hero-copy .muted {
+    color: rgba(255, 255, 255, 0.85);
+}
+.hero-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+.hero-points span {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+.home-hero-image {
+    width: 100%;
+    border-radius: 18px;
+}
+.home-stats {
+    margin-top: -36px;
+    position: relative;
+    z-index: 2;
+}
+.home-stats-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+}
+.section-soft {
+    background: var(--surface-2, #f1f5f9);
+}
+.home-split {
+    display: grid;
+    gap: 22px;
+    grid-template-columns: 1fr 1fr;
+}
+.about-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+.about-media {
+    overflow: hidden;
+}
+.section-image {
+    width: 100%;
+    border-radius: 16px;
+}
+.section-title-wrap {
+    margin-bottom: 20px;
+}
+.grid-4 {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+.service-card,
+.feature-card {
+    height: 100%;
+}
+.service-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue-700, #1e5f9e), var(--blue-500, #3b9be0));
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+.service-icon svg {
+    width: 22px;
+    height: 22px;
+}
+.service-card:hover,
+.feature-card:hover {
+    border-color: var(--blue-200, #bfdbfe);
+}
+.nanny-card {
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+}
+.marketplace-card {
+    gap: 10px;
+}
+.nanny-top-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.nanny-id-wrap {
+    min-width: 0;
+}
+.nanny-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.nanny-specialties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.specialty-badge {
+    background: #f1f5f9;
+    color: #334155;
+}
+.nanny-badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.online-badge {
+    background: #dcfce7;
+    color: #166534;
+}
+.verified-badge {
+    background: #dbeafe;
+    color: #1e40af;
+}
+.experience-badge {
+    background: #f1f5f9;
+    color: #334155;
+}
+.home-gallery-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+}
+.home-gallery-item {
+    padding: 10px;
+}
+.gallery-link {
+    display: block;
+    overflow: hidden;
+    border-radius: 14px;
+}
+.home-gallery-item img {
+    width: 100%;
+    border-radius: 14px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+.gallery-link:hover img {
+    transform: scale(1.05);
+}
+.lightbox-open {
+    overflow: hidden;
+}
+.simple-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+}
+.simple-lightbox img {
+    max-width: min(1100px, 92vw);
+    max-height: 88vh;
+    border-radius: 14px;
+    box-shadow: 0 24px 56px rgba(15, 23, 42, 0.44);
+}
+.slb-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+.home-cta .card {
+    border: 1px solid var(--border, #e2e8f0);
+}
+.t-stars {
+    color: #f5a623;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+.tcard blockquote {
+    margin: 0 0 14px;
+    color: #334155;
+    font-size: 1.02rem;
+}
+.t-who {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.price-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.price-card ul {
+    margin: 0;
+    padding-left: 18px;
+    color: #475569;
+}
+.featured-plan {
+    border: 2px solid var(--blue-500, #3b9be0);
+    box-shadow: 0 14px 36px rgba(30, 95, 158, 0.16);
+}
+.plan-badge {
+    align-self: flex-start;
+    border-radius: 999px;
+    padding: 6px 12px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue-700, #1e5f9e), var(--blue-500, #3b9be0));
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.cta-shell {
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+.cta-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(18, 63, 112, 0.94), rgba(30, 95, 158, 0.86));
+    z-index: 0;
+}
+.cta-head,
+.cta-shell .home-newsletter {
+    position: relative;
+    z-index: 1;
+}
+.cta-shell h2,
+.cta-shell .h-eyebrow,
+.cta-shell .muted {
+    color: #fff;
+}
+.cta-shell .home-newsletter .form-control {
+    background: rgba(255, 255, 255, 0.96);
+}
+.home-newsletter {
+    margin-top: 16px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr auto;
+}
+
+@media (max-width: 1024px) {
+    .home-hero-inner,
+    .home-split {
+        grid-template-columns: 1fr;
+    }
+    .grid-4 {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+    }
+    .home-stats-grid {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+    .home-gallery-grid {
+        grid-template-columns: repeat(2, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-4,
+    .home-gallery-grid,
+    .home-stats-grid,
+    .home-newsletter {
+        grid-template-columns: 1fr;
+    }
+    .home-hero {
+        min-height: auto;
+        padding-top: 22px;
+    }
+}

@@ -1,0 +1,17 @@
+.container-wide {
+    width: min(1200px, 92vw);
+    margin-inline: auto;
+}
+.section-pad {
+    padding-block: clamp(28px, 5vw, 64px);
+}
+.grid-auto {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.home-main {
+    width: 100%;
+    max-width: none;
+}

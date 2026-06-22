@@ -1,0 +1,26 @@
+# Default landing page
+DirectoryIndex index.php
+
+# Block direct browser access to server-only folders
+RedirectMatch 403 ^/nannyapp/(config|includes|database)/.*$
+
+# Don't list directory contents
+Options -Indexes
+
+# Correct MIME type for the web manifest
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
+# Route unknown requests to the project 404 page.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /nannyapp/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ 404.php [L,QSA]
+</IfModule>
+
+# Error documents (Apache-level fallback)
+ErrorDocument 404 /nannyapp/404.php
+ErrorDocument 500 /nannyapp/500.php

@@ -1,0 +1,88 @@
+.card {
+    background: var(--surface, #fff);
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid var(--border, #e2e8f0);
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow);
+}
+.btn {
+    border: none;
+    padding: 14px 28px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+}
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 10px;
+}
+.stat-card {
+    border: 1px solid var(--line, #e2e8f0);
+    border-radius: 16px;
+    padding: 18px;
+}
+.empty-state {
+    text-align: center;
+    padding: 32px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-control {
+    width: 100%;
+    padding: 15px;
+    border-radius: 14px;
+    background: var(--surface-2, #f1f5f9);
+    border: 1px solid var(--border, #e2e8f0);
+}
+
+.app-alert {
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+}
+.app-alert-success {
+    background: rgba(34, 197, 94, 0.12);
+    border-color: rgba(34, 197, 94, 0.35);
+}
+.app-alert-danger {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.35);
+}
+.app-alert-warning {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.35);
+}
+.app-alert-info {
+    background: rgba(37, 99, 235, 0.12);
+    border-color: rgba(37, 99, 235, 0.35);
+}
+
+.stat-card-icon {
+    display: inline-flex;
+    margin-right: 6px;
+}
+.stat-card-label {
+    display: block;
+    color: var(--muted, #64748b);
+    font-size: 0.85rem;
+}
+.stat-card-value {
+    display: block;
+    font-size: 1.2rem;
+}

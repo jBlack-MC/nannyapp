@@ -1,0 +1,52 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="circ"><circle cx="100" cy="100" r="100"/></clipPath>
+  </defs>
+  <g clip-path="url(#circ)">
+    <!-- warm amber background -->
+    <rect width="200" height="200" fill="#FEF3C7"/>
+    <!-- shoulders / blouse (teal) -->
+    <path d="M30 200 Q35 152 100 146 Q165 152 170 200Z" fill="#0D9488"/>
+    <!-- collar white -->
+    <path d="M82 150 L100 168 L118 150 Q100 158 82 150Z" fill="white" opacity="0.45"/>
+    <!-- neck -->
+    <rect x="88" y="138" width="24" height="18" rx="9" fill="#B8784A"/>
+    <!-- head/face -->
+    <ellipse cx="100" cy="101" rx="44" ry="50" fill="#B8784A"/>
+    <!-- silver hair back layer -->
+    <ellipse cx="100" cy="80" rx="44" ry="38" fill="#C0C0C0"/>
+    <!-- bun -->
+    <circle cx="100" cy="48" r="17" fill="#C0C0C0"/>
+    <circle cx="100" cy="48" r="9" fill="#A8A8A8"/>
+    <!-- hair side curtains -->
+    <ellipse cx="58" cy="107" rx="9" ry="22" fill="#C0C0C0"/>
+    <ellipse cx="142" cy="107" rx="9" ry="22" fill="#C0C0C0"/>
+    <!-- hair top coverage -->
+    <path d="M56 92 Q56 56 100 50 Q144 56 144 92 Q136 60 100 58 Q64 60 56 92Z" fill="#C0C0C0"/>
+    <!-- forehead re-expose skin -->
+    <ellipse cx="100" cy="102" rx="36" ry="45" fill="#B8784A"/>
+    <!-- eyes -->
+    <ellipse cx="84" cy="97" rx="7" ry="6" fill="white"/>
+    <ellipse cx="116" cy="97" rx="7" ry="6" fill="white"/>
+    <circle cx="84" cy="97" r="3.8" fill="#3D200A"/>
+    <circle cx="116" cy="97" r="3.8" fill="#3D200A"/>
+    <circle cx="85.5" cy="95.5" r="1.4" fill="white"/>
+    <circle cx="117.5" cy="95.5" r="1.4" fill="white"/>
+    <!-- eyebrows (grey) -->
+    <path d="M77 89 Q84 86 91 88" stroke="#999" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M109 88 Q116 86 123 89" stroke="#999" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- nose -->
+    <path d="M97 104 Q95 112 98 115 Q100 116 102 115 Q105 112 103 104" stroke="#96603A" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- warm smile -->
+    <path d="M87 124 Q100 134 113 124" stroke="#96603A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- smile dimples -->
+    <circle cx="85" cy="123" r="2" fill="#A06840" opacity="0.5"/>
+    <circle cx="115" cy="123" r="2" fill="#A06840" opacity="0.5"/>
+    <!-- soft blush -->
+    <ellipse cx="78" cy="115" rx="10" ry="6" fill="#E08050" opacity="0.22"/>
+    <ellipse cx="122" cy="115" rx="10" ry="6" fill="#E08050" opacity="0.22"/>
+    <!-- pearl earrings -->
+    <circle cx="55" cy="112" r="5.5" fill="#FFFFF0" stroke="#D8D8C0" stroke-width="1"/>
+    <circle cx="145" cy="112" r="5.5" fill="#FFFFF0" stroke="#D8D8C0" stroke-width="1"/>
+  </g>
+</svg>

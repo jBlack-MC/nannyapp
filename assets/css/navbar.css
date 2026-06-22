@@ -1,0 +1,5 @@
+/* Navbar logo image enhancement — additive only, all other nav styles live in style.css */
+.brand-logo-wrap {
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(18, 63, 112, 0.16);
+}

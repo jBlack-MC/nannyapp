@@ -1,0 +1,38 @@
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #38bdf8;
+    --accent: #10b981;
+    --success: #22c55e;
+    --danger: #ef4444;
+
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+
+    --text: #0f172a;
+    --text-light: #64748b;
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+
+    --border: #e2e8f0;
+    --radius: 20px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --transition: 0.3s ease;
+
+    /* Compatibility aliases used by shared styles */
+    --brand-900: #0f172a;
+    --brand-800: #1e293b;
+    --brand-700: #1d4ed8;
+    --brand-600: #2563eb;
+    --brand-500: #38bdf8;
+    --brand-300: #93c5fd;
+    --brand-100: #dbeafe;
+    --brand-50: #eff6ff;
+    --ink: var(--text);
+    --muted: var(--text-light);
+    --line: var(--border);
+    --card: var(--surface);
+}

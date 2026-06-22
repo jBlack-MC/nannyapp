@@ -1,0 +1,13 @@
+{
+  "name": "Nanny-App — Care • Connect • Comfort",
+  "short_name": "Nanny-App",
+  "description": "Find vetted nannies, book childcare and manage bookings.",
+  "start_url": "./index.php",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f9ff",
+  "theme_color": "#1e5f9e",
+  "icons": [
+    { "src": "assets/img/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

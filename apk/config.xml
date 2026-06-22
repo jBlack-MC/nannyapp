@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Apache Cordova config for wrapping Nanny-App as an Android APK.
+  This wraps the live PHP site in a native WebView. See BUILD_APK.md.
+  Set <content src> to the URL where your PHP app is hosted/served.
+-->
+<widget id="app.nanny.knights" version="1.0.0"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+    <name>Nanny-App</name>
+    <description>Find vetted nannies, book childcare and manage bookings.</description>
+    <author email="team@nanny.app" href="https://nanny.app">Team Knights</author>
+
+    <!-- Point this at your running server.
+         - Android emulator -> http://10.0.2.2/nannyapp/index.php
+         - Real device on same Wi-Fi -> http://YOUR_PC_LAN_IP/nannyapp/index.php
+         - Production host -> https://your-domain/index.php -->
+    <content src="http://10.0.2.2/nannyapp/index.php" />
+
+    <access origin="*" />
+    <allow-navigation href="http://10.0.2.2/*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="mailto:*" />
+
+    <preference name="Fullscreen" value="false" />
+    <preference name="BackgroundColor" value="0xfff4f9ff" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="LoadUrlTimeoutValue" value="60000" />
+    <preference name="android-minSdkVersion" value="24" />
+    <preference name="android-targetSdkVersion" value="34" />
+
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <preference name="AndroidWindowSplashScreenBackgroundColor" value="#1e5f9e" />
+    </platform>
+</widget>

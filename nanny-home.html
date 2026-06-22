@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NannyConnect — Trusted Childcare &amp; Babysitting Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="Find trusted, background-checked nannies and babysitters near you. Professional childcare services for families who want the best care for their children.">
+
+<!-- ===== LIBRARY CSS ===== -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" rel="stylesheet">
+
+<!-- ===== Google Fonts ===== -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100,300,400,700" rel="stylesheet">
+
+<style>
+/* ============================================================
+   NANNYCONNECT — Complete Styling
+   ============================================================ */
+
+/* ---------- Base ---------- */
+html, body { width: 100%; overflow-x: hidden; }
+body {
+    height:100%;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300; padding:0; margin:0;
+    font-size:16px; line-height: 28px;
+    color: #555; background: #fff;
+    overflow-x:hidden; position: relative;
+}
+h1,h2,h3,h4,h5,h6{ font-family: 'Alegreya Sans', sans-serif; }
+h1 { font-size: 3em; line-height:1.2em; margin:0 0 .8em; }
+h2 { font-size: 2.2em; line-height:1.3em; margin:0 0 .5em; }
+h3 { font-size: 1.5em; line-height:1.4em; }
+h4 { font-size: 1.25em; line-height:1.4em;}
+h5 { font-size: 1.1em; line-height:1.4em; }
+h6 { font-size: 1em; line-height:1.2em; }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { text-decoration: none; }
+p { padding:0 0 1em; margin:0; }
+a { color: #E85D75; outline: 0; font-weight: 600; -webkit-transition: all .8s ease; transition: all .8s ease; }
+a:hover { text-decoration: none; color: #2C3E50; -webkit-transition: all .8s ease; transition: all .8s ease; }
+.highlight { color: #E85D75; }
+.section-title { color: #2C3E50; font-weight: 700; }
+
+/* ---------- Navigation ---------- */
+.is-sticky .navbar-default { background: rgba(44, 62, 80, 0.97); padding: 8px 0; border-bottom: 3px solid #F5A623; }
+#menu-sticky-wrapper{ z-index: 2; position: relative; }
+.overlay { background-color: transparent; position: relative; width: 100%; height: 100%; display: block; }
+#menu { z-index: 999; position: fixed; top: 0; left: 0; right: 0; width: 100%; }
+
+.navbar-default { background: transparent; padding: 15px 0; border-bottom: 2px solid rgba(245, 166, 35, 0.3); border-radius:0; border-top:0; }
+.navbar-default .navbar-brand { padding: 5px 15px; }
+.navbar-default .navbar-brand img { height: 42px; width: auto; display: block; }
+.navbar-default .navbar-nav > li > a { color: #FFF; font-weight: 600; font-size: 15px; letter-spacing: 0.5px; }
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus { color: #F5A623; background: transparent; }
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus { background: transparent; color: #F5A623; }
+.navbar-default .navbar-toggle { border-color: rgba(255,255,255,0.4); }
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus { background-color: rgba(255,255,255,0.15); }
+
+/* ---------- Buttons ---------- */
+.btn-default {
+    font-size: 16px; margin: 30px 0 10px; margin-right: 10px; line-height: 20px;
+    padding: 14px 32px; height: 50px; border: 2px solid #F5A623; background: transparent;
+    transition: all 0.4s; color: #2C3E50; border-radius: 50px;
+    font-weight: 600;
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active {
+    border: 2px solid #E85D75; background: #E85D75; color: white;
+}
+
+.btn-primary {
+    font-size: 16px; margin: 30px 0 10px; margin-right: 10px; line-height: 20px;
+    padding: 14px 32px; height: 50px; border: 2px solid #F5A623; background: #F5A623;
+    transition: all 0.4s; color: #2C3E50; border-radius: 50px;
+    font-weight: 600;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+    border: 2px solid #F5A623; background: transparent; color: #F5A623;
+}
+
+.btn-secondary {
+    font-size: 18px; font-weight: 600; line-height: 20px; padding: 18px 45px; height: 60px;
+    border: none; background: #E85D75; transition: all 0.4s; color: white; border-radius: 50px;
+}
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active {
+    background: #2C3E50; color: white;
+}
+
+.btn-nanny {
+    font-size: 16px; margin: 30px 0 10px; margin-right: 10px; line-height: 20px;
+    padding: 14px 32px; height: 50px; border: 2px solid #E85D75; background: #E85D75;
+    transition: all 0.4s; color: white; border-radius: 50px;
+    font-weight: 600;
+}
+.btn-nanny:hover, .btn-nanny:focus, .btn-nanny:active, .btn-nanny.active {
+    border: 2px solid #E85D75; background: transparent; color: #E85D75;
+}
+
+.btn-nanny-sm {
+    font-size: 14px; padding: 8px 22px; border-radius: 50px;
+    background: #E85D75; color: #fff; border: 2px solid #E85D75;
+    transition: all 0.3s ease; font-weight: 600; display: inline-block;
+}
+.btn-nanny-sm:hover {
+    background: transparent; color: #E85D75; text-decoration: none;
+}
+
+/* ---------- Hero / Landing ---------- */
+.landing { padding-top: 110px; min-height: 100vh; display: flex; align-items: center; }
+.landing h1{ font-size: 54px; font-weight: 300; color: #fff; margin: 30px 0 15px 0; text-shadow: 0 2px 4px rgba(0, 0, 0, .5); }
+.landing h1 span{ color: #F5A623; font-weight: 700; }
+.landing p { color: rgba(255,255,255,0.95); font-size: 18px; }
+.landing-text { margin-bottom: 20px; }
+.landing-text p { padding-bottom: 20px; }
+.more { margin-bottom: 60px; }
+.more p { font-size: 17px; color: rgba(255,255,255,0.9); }
+.more p i { color: #F5A623; margin-right: 8px; }
+.head-btn { margin-bottom: 40px; }
+.hero-img-wrap { margin: 20px 0 40px; }
+.hero-img-wrap img { border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
+
+/* ---------- Sections ---------- */
+#intro { padding: 80px 0 100px; background: #fff; }
+#intro h2 { font-size: 38px; font-weight: 300; margin: 15px 0 15px 0; color: #2C3E50; }
+#intro h2 span { color: #E85D75; }
+.intro-pic { margin-top: 20px; border-radius: 16px; overflow: hidden; }
+.btn-section { padding-top: 20px; }
+
+#feature { padding: 80px 0; background: #F8F9FA; color: #2C3E50; }
+#feature h2 { margin: 15px 0 15px 0; font-size: 38px; font-weight: 300; }
+#feature .feature-title p { font-size: 18px; color: #777; }
+#feature .feat-list { margin-top: 40px; }
+#feature .feat-list i { font-size: 48px; float: left; width: 20%; color: #F5A623; height: 100%; position: relative; top: 10px; }
+#feature .feat-list:hover i { color: #E85D75; -webkit-transition: all .8s ease; transition: all .8s ease; }
+#feature .inner { float: left; display: inline-block; width: 80%; padding-left: 10px; }
+.row-feat { padding-top: 50px; }
+
+#features{ padding: 80px 0; background: #fff; }
+#features .fa{ border: 2px solid #F5A623; width: 64px; height: 64px; color: #F5A623; text-align: center; padding: 21px; font-size: 22px; border-radius: 50%; background: rgba(245, 166, 35, 0.08); }
+.feat-list { margin-top: 40px; }
+
+#feature-2 { padding: 100px 0; background: #fff; }
+#feature-2 h2 { font-size: 38px; font-weight: 300; margin: 15px 0 15px 0; color: #2C3E50; }
+.feature-2-pic { margin-top: 20px; border-radius: 16px; overflow: hidden; }
+
+/* ---------- Stats Band ---------- */
+#stats { padding: 60px 0; background: #2C3E50; }
+.stat-item { text-align: center; padding: 20px; }
+.stat-item .stat-number { font-size: 52px; font-weight: 700; color: #F5A623; font-family: 'Alegreya Sans', sans-serif; line-height: 1; }
+.stat-item .stat-label { color: rgba(255,255,255,0.8); font-size: 16px; margin-top: 8px; }
+
+/* ---------- Subscribe / Newsletter ---------- */
+.subscribe { color: #fff; padding: 40px 0; }
+.letter { margin-top: 80px; width: 100px; height: 100px; line-height: 100px; font-size: 50px; color: #F5A623; border-radius: 50%; border: solid 2px #F5A623; padding-top: 30px; background: rgba(245, 166, 35, 0.1); }
+.subscribe p { margin: 30px auto 30px; font-size: 17px; }
+.subscribe-form { max-width: 420px; margin: 40px auto 120px; text-align: center; overflow: hidden; }
+.subscribe-form form { position: relative; }
+.subscribe-form input { max-width: 85%; position: relative; padding: 5px 25px; }
+.subscribe-form .form-control { border-radius: 50px 0 0 50px; border: none; background-color: rgba(255, 255, 255, 0.9); color: #333; font-size: 1.1em; height: 55px; }
+.subscribe-form button { border-radius: 0 50px 50px 0; background-color: #F5A623; color: #2C3E50; font-size: 1em; line-height: 52px; position: absolute; top: 0px; right: 0px; padding: 0 30px; margin: 0; font-weight: 700; -webkit-transition: all .8s ease; transition: all .8s ease; }
+.subscribe-form .btn { height: 55px; border: none; }
+.subscribe-form .btn:hover { background-color: #E85D75; color: #fff; }
+
+/* ---------- Nanny Gallery ---------- */
+#screenshot { padding-top: 80px; background: #F8F9FA; }
+.title-line { width: 80px; height: 3px; margin: 0 auto; background: #F5A623; }
+.screenshots { padding-top: 50px; padding-bottom: 80px; }
+.screenshots .screen { background: #FFFFFF; padding: 10px; margin: 13px; display: block; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.06); }
+.screenshots .screen img { width: 100%; border-radius: 8px; border: solid 3px #eee; -webkit-transition: all .8s ease; transition: all .8s ease; }
+.screenshots .screen img:hover { border: solid 3px #E85D75; }
+
+/* ---------- Testimonials ---------- */
+#clients { padding: 80px 0 100px; background-color: #fff; }
+.clients-item { display: block; width: 100%; height: auto; position: relative; margin-top: 30px; }
+.clients-item .box { margin-right: 15px; margin-left: 15px; background: #F8F9FA; border-radius: 16px; padding: 30px; }
+.clients-item .box .message { padding: 0; font-style: italic; line-height: 30px; font-weight: 300; font-size: 18px; color: #2C3E50; }
+.clients-item .client-pic img { width: 100px; height: 100px; border-radius: 50%; max-width: 100%; border: 3px solid #F5A623; object-fit: cover; }
+.clients-item .client-info .client-name { margin-top: 10px; font-size: 16px; font-weight: 700; color: #2C3E50; }
+.clients-item .client-info .company { font-style: italic; color: #E85D75; font-weight: 600; }
+.owl-theme .owl-controls .owl-page span{ background: #E85D75; }
+
+/* ---------- Call to Action ---------- */
+.action { color: #fff; }
+.action h2 { font-size: 38px; font-weight: 300; color: #fff; }
+.action h2 span { color: #F5A623; }
+
+/* ---------- Footer ---------- */
+#footer { background: #2C3E50; padding: 50px 0; color: #ccc; }
+#footer a { color: #F5A623; }
+#footer a:hover { color: #fff; }
+.social ul { padding: 0; list-style: none; }
+.social li { display: inline-block; padding-right: .3em; }
+.social li a { display: block; width: 44px; height: 44px; line-height: 44px; color: #2C3E50; border-radius: 50%; background: #fff; border: solid 1px #ddd; -webkit-transition: all .8s ease; transition: all .8s ease; font-size: 18px; text-align: center; }
+.social li a:hover { color: #fff; background: #E85D75; border-color: #E85D75; }
+
+.scrollToTop{ width: 44px; height: 44px; font-size: 18px; text-align: center; color: #E85D75; position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000; background: #fff; border-radius: 50%; box-shadow: 0 2px 15px rgba(0,0,0,0.15); line-height: 44px; }
+.scrollToTop:hover{ color: #F5A623; background: #2C3E50; }
+
+.downloadSection{ padding:100px 0; }
+
+/* ---------- Pricing ---------- */
+#package { padding: 80px 0; background: #F8F9FA; }
+.price-box { background-color: #FFFFFF; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: all 0.4s ease; }
+.price-box:hover { transform: translateY(-8px); box-shadow: 0 10px 40px rgba(0,0,0,0.12); }
+.package-option { padding: 40px 0 60px; }
+.package-option ul { padding: 0; }
+.price-heading h3 { margin-top: 0; background: #2C3E50; color: #fff; padding: 15px; border-radius: 50px; margin: 25px; font-size: 18px; position: relative; top: -27px; border: #fff 5px solid; font-weight: 700; letter-spacing: 1px; }
+.price-group { padding: 20px 0 10px; }
+.price-group .rand { font-size: 20px; position: relative; bottom: 48px; color: #E85D75; font-weight: 700; }
+.price-group .price { color: #2C3E50; font-size: 60px; font-weight: 700; }
+.price-group .time { font-size: 18px; color: #777; }
+.price-feature li { margin-left: 30px; margin-right: 30px; list-style: none; border-bottom: solid 1px #f0f0f0; line-height: 40px; padding: 10px 0; color: #555; }
+.price-feature li i { color: #27ae60; margin-right: 10px; }
+.price-feature li .fa-times { color: #e74c3c; }
+.price-feature li strike { color: #aaa; }
+.btn-price { margin: 5px 0 25px; font-size: 16px; padding: 10px 40px; height: 46px; background: #F5A623; transition: all 0.4s; color: #2C3E50; border-radius: 50px; font-weight: 700; border: 2px solid #F5A623; display: inline-block; }
+.btn-price:hover { background: #E85D75; color: white; border-color: #E85D75; text-decoration: none; }
+
+/* ---------- Nanny Cards ---------- */
+.nanny-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    transition: all 0.4s ease;
+    border: 1px solid #f0f0f0;
+}
+.nanny-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+    border-color: #F5A623;
+}
+.nanny-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 3px solid #F5A623;
+}
+.nanny-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.nanny-card .nanny-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2C3E50;
+    margin: 0 0 3px;
+}
+.nanny-card .nanny-title {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+.nanny-card .nanny-rating { color: #F5A623; font-size: 16px; }
+.nanny-card .nanny-rating span { color: #777; font-size: 14px; }
+.nanny-card .nanny-price { font-size: 24px; font-weight: 700; color: #E85D75; }
+.nanny-card .nanny-price small { font-size: 14px; font-weight: 300; color: #777; }
+.nanny-card .nanny-tags .tag {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin: 3px 3px 0 0;
+    color: #555;
+    font-weight: 600;
+}
+.nanny-card .verified-badge { color: #27ae60; font-size: 14px; font-weight: 600; }
+.nanny-card .nanny-bio { font-size: 14px; color: #666; margin: 10px 0; line-height: 1.6; }
+
+/* ---------- Lightbox ---------- */
+.simple-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: flex; align-items: center; justify-content: center; z-index: 2000; cursor: zoom-out; }
+.simple-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+.simple-lightbox .slb-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; line-height: 1; cursor: pointer; }
+
+/* ---------- Responsive ---------- */
+@media only screen and (min-width:768px) and (max-width:1024px) and (orientation:portrait){
+    .more{margin-bottom:50px}#intro{padding:30px 0 50px}#intro h2,#feature-2 h2{font-weight:150;text-align:center}#intro p,#feature-2 p{text-align:center}.btn-section{text-align:center}#feature{padding-top:75px}.row-feat{padding-top:40px;padding-bottom:40px}#feature-2{padding:80px 0 100px}.feature-2-pic{margin-top:40px}
+}
+@media (max-width:767px){
+    .more{margin-bottom:40px}#intro{padding:50px 0 50px}#intro h2,#feature-2 h2{font-weight:150;text-align:center}#intro p,#feature-2 p{text-align:center}.btn-section{text-align:center}#feature .feat-list i{padding-left:40px}.feature-2-pic{margin-top:50px}.landing{min-height:auto;padding-top:90px;padding-bottom:40px}.hero-img-wrap{margin-top:30px}
+}
+@media (max-width:667px){
+    .landing h1{font-size:38px;margin:10px 0 25px 0}.landing-text{margin-top:20px}.letter{margin-top:75px}.subscribe p{margin:25px auto 15px}.subscribe-form{margin:20px auto 100px}.action h2{margin-top:70px}
+}
+@media (max-width:568px){
+    .landing h1{font-size:32px;margin:20px 0 10px 0}.landing-text p{font-size:15px !important}#intro{padding-top:50px}#feature{padding-top:50px}#feature .feat-list i{padding-left:20px}#screenshot{padding-top:50px}.screenshots{padding-top:30px;padding-bottom:50px}#clients{padding:50px 0 50px}.action h2{margin:50px 0 20px;font-size:30px}
+}
+@media (max-width:480px){ #feature .feat-list i{padding-left:5px}.action h2{font-size:28px} }
+@media (max-width:360px){ #intro h2,#feature h2,#feature-2 h2{font-size:28px}#feature .feat-list i{padding-left:0}#feature .inner{padding-left:15px} }
+</style>
+</head>
+
+<body data-spy="scroll" data-target="#navbar-scroll">
+
+<div id="top"></div>
+
+<!-- ===== NAVIGATION ===== -->
+<div id="menu">
+    <nav class="navbar-wrapper navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-themers">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#top">
+                    <img src="assets/img/logo.png" alt="NannyConnect" style="height:42px;width:auto;">
+                </a>
+            </div>
+            <div id="navbar-scroll" class="collapse navbar-collapse navbar-themers navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="#intro">About</a></li>
+                    <li><a href="#feature">Services</a></li>
+                    <li><a href="#nannies">Our Nannies</a></li>
+                    <li><a href="#screenshot">Gallery</a></li>
+                    <li><a href="#clients">Testimonials</a></li>
+                    <li><a href="#package">Pricing</a></li>
+                    <li><a href="#download">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- ===== HERO / BANNER ===== -->
+<div class="fullscreen landing parallax"
+     style="background-image:url('assets/img/hero-nanny-SMceVYR7.jpg');background-size:cover;background-position:center top;"
+     data-img-width="1920" data-img-height="1280" data-diff="100">
+    <div class="overlay" style="background:linear-gradient(102deg,rgba(44,62,80,.82) 0%,rgba(44,62,80,.65) 50%,rgba(44,62,80,.30) 100%);width:100%;height:100%;min-height:100vh;display:flex;align-items:center;">
+        <div class="container" style="padding-top:30px;padding-bottom:40px;width:100%;">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class="wow fadeInLeft">Finding <span>Trusted Childcare</span><br>Made Simple</h1>
+                    <div class="landing-text wow fadeInLeft">
+                        <p>Connect with loving, background-checked nannies who will care for your children like family. Safe, reliable, and professional childcare when you need it most.</p>
+                    </div>
+                    <div class="head-btn wow fadeInLeft">
+                        <a href="#nannies" class="btn-primary"><i class="fa fa-heart"></i> Find a Nanny</a>
+                        <a href="#intro" class="btn-nanny"><i class="fa fa-info-circle"></i> Learn More</a>
+                    </div>
+                    <div class="more wow fadeInLeft">
+                        <p>
+                            <i class="fa fa-check-circle"></i> Background Checked &nbsp;|&nbsp;
+                            <i class="fa fa-check-circle"></i> Verified References &nbsp;|&nbsp;
+                            <i class="fa fa-check-circle"></i> Trusted by Families
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== STATS BAND ===== -->
+<div id="stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6 stat-item wow fadeInUp">
+                <div class="stat-number">1,200+</div>
+                <div class="stat-label">Verified Nannies</div>
+            </div>
+            <div class="col-sm-3 col-xs-6 stat-item wow fadeInUp" data-wow-delay="0.15s">
+                <div class="stat-number">8,400+</div>
+                <div class="stat-label">Happy Families</div>
+            </div>
+            <div class="col-sm-3 col-xs-6 stat-item wow fadeInUp" data-wow-delay="0.3s">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfaction Rate</div>
+            </div>
+            <div class="col-sm-3 col-xs-6 stat-item wow fadeInUp" data-wow-delay="0.45s">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Support Available</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== INTRO / ABOUT ===== -->
+<div id="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 wow fadeInLeft">
+                <img src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&h=420&fit=crop" alt="Nanny playing with children" class="img-responsive" style="border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+            </div>
+            <div class="col-md-6 wow fadeInRight">
+                <h2>Professional Childcare <span>You Can Trust</span></h2>
+                <p>At NannyConnect, we understand that finding the right person to care for your children is one of the most important decisions you'll ever make. That's why we've built a community of dedicated, experienced, and thoroughly vetted nannies who share your commitment to raising happy, healthy children.</p>
+                <p>Every nanny in our network has passed a comprehensive background check, holds relevant childcare certifications, and comes highly recommended by families just like yours. We believe in matching not just skills, but personalities — because the best care happens when your nanny truly connects with your family.</p>
+                <div class="btn-section">
+                    <a href="#nannies" class="btn-default">Meet Our Nannies</a>
+                    <a href="#download" class="btn-nanny">Get Started Today</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FEATURE / SERVICES ===== -->
+<div id="feature">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 text-center feature-title">
+                <h2 class="section-title">Comprehensive <span style="color:#E85D75;">Childcare Services</span></h2>
+                <p>Flexible, professional care solutions designed to support your family's unique needs and schedule.</p>
+            </div>
+        </div>
+        <div class="row row-feat">
+            <div class="col-md-12">
+                <div class="col-sm-4 feat-list">
+                    <i class="fa fa-clock-o wow fadeInUp"></i>
+                    <div class="inner">
+                        <h4>Full-Time Nanny Care</h4>
+                        <p>Dedicated childcare professionals available Monday through Friday, providing consistent, loving care that helps your children thrive and grow.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 feat-list">
+                    <i class="fa fa-calendar-check-o wow fadeInUp" data-wow-delay="0.2s"></i>
+                    <div class="inner">
+                        <h4>Part-Time &amp; Flexible</h4>
+                        <p>Need after-school care, evening support, or just a few days a week? Our flexible options adapt to your family's changing needs.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 feat-list">
+                    <i class="fa fa-moon-o wow fadeInUp" data-wow-delay="0.4s"></i>
+                    <div class="inner">
+                        <h4>Babysitting &amp; Overnight</h4>
+                        <p>Date night, last-minute coverage, or overnight care — our experienced sitters provide reliable, nurturing support whenever you need it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FEATURES EXTENDED ===== -->
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 wow fadeInLeft">
+                <img class="img-responsive" src="https://images.unsplash.com/photo-1587616211892-b8cd40e84f3e?w=500&h=600&fit=crop" alt="Trusted Childcare" style="border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.08);">
+            </div>
+            <div class="col-md-6 col-sm-6 wow fadeInRight">
+                <h2 class="section-title">Why Families <span style="color:#E85D75;">Love Us</span></h2>
+                <div class="feat-list" style="margin-top:20px;">
+                    <i class="fa fa-shield" style="font-size:36px;color:#F5A623;float:left;width:15%;top:6px;position:relative;"></i>
+                    <div style="float:left;width:85%;padding-left:10px;">
+                        <h4>Thorough Background Checks</h4>
+                        <p>Every nanny undergoes a comprehensive criminal background check, reference verification, and identity confirmation before joining our community.</p>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="feat-list">
+                    <i class="fa fa-star" style="font-size:36px;color:#F5A623;float:left;width:15%;top:6px;position:relative;"></i>
+                    <div style="float:left;width:85%;padding-left:10px;">
+                        <h4>Verified Reviews &amp; Ratings</h4>
+                        <p>Read honest feedback from real families who have worked with our nannies. Transparent reviews help you make the best choice for your family.</p>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="feat-list">
+                    <i class="fa fa-users" style="font-size:36px;color:#F5A623;float:left;width:15%;top:6px;position:relative;"></i>
+                    <div style="float:left;width:85%;padding-left:10px;">
+                        <h4>Personalised Matching</h4>
+                        <p>We consider your family's values, parenting style, and your children's unique needs to find a nanny who will be a perfect fit.</p>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="feat-list">
+                    <i class="fa fa-credit-card" style="font-size:36px;color:#F5A623;float:left;width:15%;top:6px;position:relative;"></i>
+                    <div style="float:left;width:85%;padding-left:10px;">
+                        <h4>Secure &amp; Transparent Payments</h4>
+                        <p>Pay with confidence through our secure system. Your satisfaction is guaranteed — we only release payment when you're happy with the care provided.</p>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TOP-RATED NANNIES ===== -->
+<div id="nannies" style="padding:80px 0;background:#F8F9FA;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="wow fadeInLeft section-title">Top-Rated <span style="color:#E85D75;">Near You</span></h2>
+            <div class="title-line wow fadeInRight"></div>
+            <p style="margin-top:15px;color:#777;font-size:17px;">Compassionate, experienced caregivers ready to join your family</p>
+        </div>
+        <div class="row" style="margin-top:40px;">
+
+            <!-- Margaret Lopez -->
+            <div class="col-sm-4 wow fadeInUp">
+                <div class="nanny-card">
+                    <div class="nanny-avatar">
+                        <img src="assets/img/avatar-margaret.svg" alt="Margaret Lopez">
+                    </div>
+                    <h3 class="nanny-name">Margaret Lopez</h3>
+                    <div class="nanny-title">Senior Childcare Professional</div>
+                    <div class="nanny-rating">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                        <span>(47 reviews)</span>
+                    </div>
+                    <p class="nanny-bio">"I believe every child deserves a safe, nurturing environment where they can learn, explore, and grow with confidence."</p>
+                    <div class="nanny-tags">
+                        <span class="tag">Infant Care</span>
+                        <span class="tag">CPR Certified</span>
+                        <span class="tag">Meal Prep</span>
+                        <span class="tag">15+ Years</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px;border-top:1px solid #eee;padding-top:15px;">
+                        <div class="nanny-price">R280 <small>/hour</small></div>
+                        <a href="auth/register.php" class="btn-nanny-sm">Book Now</a>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <span class="verified-badge"><i class="fa fa-check-circle"></i> Verified · Background Checked</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amelia Carter -->
+            <div class="col-sm-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="nanny-card">
+                    <div class="nanny-avatar" style="border-color:#E85D75;">
+                        <img src="assets/img/avatar-amelia.svg" alt="Amelia Carter">
+                    </div>
+                    <h3 class="nanny-name">Amelia Carter</h3>
+                    <div class="nanny-title">Early Childhood Educator</div>
+                    <div class="nanny-rating">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                        <span>(38 reviews)</span>
+                    </div>
+                    <p class="nanny-bio">"Every child is unique. I create engaging, individualised activities that spark curiosity and build self-confidence."</p>
+                    <div class="nanny-tags">
+                        <span class="tag">Toddler Care</span>
+                        <span class="tag">Homework Help</span>
+                        <span class="tag">Arts &amp; Crafts</span>
+                        <span class="tag">8+ Years</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px;border-top:1px solid #eee;padding-top:15px;">
+                        <div class="nanny-price">R220 <small>/hour</small></div>
+                        <a href="auth/register.php" class="btn-nanny-sm">Book Now</a>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <span class="verified-badge"><i class="fa fa-check-circle"></i> Verified · Background Checked</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jasmine Williams -->
+            <div class="col-sm-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="nanny-card">
+                    <div class="nanny-avatar" style="border-color:#8B5CF6;">
+                        <img src="assets/img/avatar-jasmine.svg" alt="Jasmine Williams">
+                    </div>
+                    <h3 class="nanny-name">Jasmine Williams</h3>
+                    <div class="nanny-title">Child Development Specialist</div>
+                    <div class="nanny-rating">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i>
+                        <span>(51 reviews)</span>
+                    </div>
+                    <p class="nanny-bio">"Active, engaging care helps children build social skills, emotional intelligence, and a lifelong love of learning."</p>
+                    <div class="nanny-tags">
+                        <span class="tag">Preschool</span>
+                        <span class="tag">Outdoor Play</span>
+                        <span class="tag">Special Needs</span>
+                        <span class="tag">10+ Years</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px;border-top:1px solid #eee;padding-top:15px;">
+                        <div class="nanny-price">R180 <small>/hour</small></div>
+                        <a href="auth/register.php" class="btn-nanny-sm">Book Now</a>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <span class="verified-badge"><i class="fa fa-check-circle"></i> Verified · Background Checked</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center" style="margin-top:10px;">
+            <a href="parent/nannies.php" class="btn-default" style="margin:0;">View All Nannies <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<div id="screenshot">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="wow fadeInLeft section-title">A Day in the <span style="color:#E85D75;">Life of Care</span></h2>
+            <div class="title-line wow fadeInRight"></div>
+            <p style="margin-top:15px;color:#777;font-size:17px;">Glimpses of the loving, engaging care our nannies provide every day</p>
+        </div>
+        <div class="row screenshots">
+            <div id="screenshots" class="owl-carousel">
+                <div class="screen wow fadeInUp">
+                    <a href="https://images.unsplash.com/photo-1596783074918-c84cb2a6f32d?w=600&h=800&fit=crop" data-toggle="lightbox">
+                        <img src="https://images.unsplash.com/photo-1596783074918-c84cb2a6f32d?w=300&h=400&fit=crop" alt="Nanny with child">
+                    </a>
+                </div>
+                <div class="screen wow fadeInUp" data-wow-delay="0.1s">
+                    <a href="https://images.unsplash.com/photo-1595475207225-428b62bda831?w=600&h=800&fit=crop" data-toggle="lightbox">
+                        <img src="https://images.unsplash.com/photo-1595475207225-428b62bda831?w=300&h=400&fit=crop" alt="Nanny playing">
+                    </a>
+                </div>
+                <div class="screen wow fadeInUp" data-wow-delay="0.2s">
+                    <a href="https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=800&fit=crop" data-toggle="lightbox">
+                        <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=300&h=400&fit=crop" alt="Reading to children">
+                    </a>
+                </div>
+                <div class="screen wow fadeInUp" data-wow-delay="0.3s">
+                    <a href="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=800&fit=crop" data-toggle="lightbox">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=400&fit=crop" alt="Outdoor play">
+                    </a>
+                </div>
+                <div class="screen wow fadeInUp" data-wow-delay="0.4s">
+                    <a href="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop" data-toggle="lightbox">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&h=400&fit=crop" alt="Craft time">
+                    </a>
+                </div>
+                <div class="screen wow fadeInUp" data-wow-delay="0.5s">
+                    <a href="https://images.unsplash.com/photo-1573496799515-eebbb63814f2?w=600&h=800&fit=crop" data-toggle="lightbox">
+                        <img src="https://images.unsplash.com/photo-1573496799515-eebbb63814f2?w=300&h=400&fit=crop" alt="Happy children">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== SUBSCRIBE / NEWSLETTER ===== -->
+<div id="subscribe">
+    <div class="subscribe fullscreen parallax"
+         style="background-image:url('https://images.unsplash.com/photo-1503676260728-1c00da094a0d?w=1920&h=1280&fit=crop');"
+         data-img-width="1920" data-img-height="1281" data-diff="100">
+        <div class="overlay" style="background: rgba(44, 62, 80, 0.85);">
+            <div class="container">
+                <div class="col-md-4 col-md-offset-4 text-center">
+                    <i class="fa fa-envelope-o letter wow fadeInUp"></i>
+                </div>
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h3 style="color:#fff;font-weight:300;font-size:32px;">Stay Connected <span style="color:#F5A623;">With Us</span></h3>
+                    <p>Subscribe to receive updates about new nannies, helpful parenting tips, and special offers for our families.</p>
+                    <div class="subscribe-form wow fadeInUp">
+                        <form action="index.php" method="POST">
+                            <input type="hidden" name="csrf_token" value="">
+                            <input class="form-control" type="email" name="email" placeholder="Your email address..." required>
+                            <button type="submit" class="subscribe-btn btn">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TESTIMONIALS ===== -->
+<div id="clients">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="wow fadeInLeft section-title">What <span style="color:#E85D75;">Families Say</span></h2>
+            <div class="title-line wow fadeInRight"></div>
+            <p style="margin-top:15px;color:#777;font-size:17px;">Real stories from real families who found their perfect nanny with us</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div id="owl-clients" class="owl-carousel owl-theme wow fadeInUp">
+                    <div class="clients-item">
+                        <div class="client-pic text-center">
+                            <img src="https://i.pravatar.cc/120?img=12" alt="Happy parent">
+                        </div>
+                        <div class="box">
+                            <p class="message text-center">"Margaret has been an absolute blessing to our family. She's reliable, loving, and my daughter adores her. I can go to work with complete peace of mind knowing my child is in safe, caring hands."</p>
+                        </div>
+                        <div class="client-info text-center">
+                            <span class="client-name">Zanele Dlamini</span>, <span class="company">Mom of 2 · Johannesburg</span>
+                        </div>
+                    </div>
+                    <div class="clients-item">
+                        <div class="client-pic text-center">
+                            <img src="https://i.pravatar.cc/120?img=33" alt="Happy parent">
+                        </div>
+                        <div class="box">
+                            <p class="message text-center">"Finding Amelia was a game-changer for our family. She's so creative and patient with our son. The matching process really understood what we were looking for and delivered perfectly."</p>
+                        </div>
+                        <div class="client-info text-center">
+                            <span class="client-name">Sipho Nkosi</span>, <span class="company">Dad of 1 · Cape Town</span>
+                        </div>
+                    </div>
+                    <div class="clients-item">
+                        <div class="client-pic text-center">
+                            <img src="https://i.pravatar.cc/120?img=52" alt="Happy parent">
+                        </div>
+                        <div class="box">
+                            <p class="message text-center">"We've tried other services, but nothing compares to the quality and peace of mind we get with NannyConnect. Every nanny is thoroughly vetted and truly cares about the children. It feels like family."</p>
+                        </div>
+                        <div class="client-info text-center">
+                            <span class="client-name">Lerato Mokoena</span>, <span class="company">Mom of 3 · Pretoria</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== PRICING ===== -->
+<div id="package">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="wow fadeInLeft section-title">Simple <span style="color:#E85D75;">Pricing</span></h2>
+            <div class="title-line wow fadeInRight"></div>
+            <p style="margin-top:15px;color:#777;font-size:17px;">Flexible plans designed to support your family's unique needs</p>
+        </div>
+        <div class="row package-option">
+            <div class="col-sm-4">
+                <div class="price-box wow fadeInUp">
+                    <div class="price-heading text-center"><h3>Occasional</h3></div>
+                    <div class="price-group text-center">
+                        <span class="rand">R</span><span class="price">0</span><span class="time">/mo</span>
+                    </div>
+                    <ul class="price-feature text-center">
+                        <li><i class="fa fa-check"></i> Browse nannies</li>
+                        <li><i class="fa fa-check"></i> Book by the hour</li>
+                        <li><i class="fa fa-check"></i> Secure payments</li>
+                        <li><i class="fa fa-check"></i> In-app messaging</li>
+                        <li><i class="fa fa-times"></i> Priority matching</li>
+                        <li><i class="fa fa-times"></i> Dedicated support</li>
+                    </ul>
+                    <div class="price-footer text-center"><a class="btn-price" href="auth/register.php">Get Started</a></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="price-box wow fadeInUp" data-wow-delay="0.2s" style="border:2px solid #F5A623;">
+                    <div class="price-heading text-center"><h3 style="background:#E85D75;">Family Plan</h3></div>
+                    <div class="price-group text-center">
+                        <span class="rand">R</span><span class="price">199</span><span class="time">/mo</span>
+                    </div>
+                    <ul class="price-feature text-center">
+                        <li><i class="fa fa-check"></i> Everything in Occasional</li>
+                        <li><i class="fa fa-check"></i> Reduced service fees</li>
+                        <li><i class="fa fa-check"></i> Priority booking</li>
+                        <li><i class="fa fa-check"></i> Save favourites</li>
+                        <li><i class="fa fa-check"></i> Priority matching</li>
+                        <li><i class="fa fa-times"></i> Dedicated support</li>
+                    </ul>
+                    <div class="price-footer text-center"><a class="btn-price" href="auth/register.php">Choose Plan</a></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="price-box wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="price-heading text-center"><h3 style="background:#2C3E50;">Premium Care</h3></div>
+                    <div class="price-group text-center">
+                        <span class="rand">R</span><span class="price">399</span><span class="time">/mo</span>
+                    </div>
+                    <ul class="price-feature text-center">
+                        <li><i class="fa fa-check"></i> Everything in Family</li>
+                        <li><i class="fa fa-check"></i> Dedicated coordinator</li>
+                        <li><i class="fa fa-check"></i> Last-minute bookings</li>
+                        <li><i class="fa fa-check"></i> Full background reports</li>
+                        <li><i class="fa fa-check"></i> Priority matching</li>
+                        <li><i class="fa fa-check"></i> 24/7 phone support</li>
+                    </ul>
+                    <div class="price-footer text-center"><a class="btn-price" href="auth/register.php">Choose Plan</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CALL TO ACTION ===== -->
+<div id="download">
+    <div class="action fullscreen parallax"
+         style="background-image:url('assets/img/hero-nanny-SMceVYR7.jpg');background-size:cover;background-position:center;"
+         data-img-width="1920" data-img-height="1280" data-diff="100">
+        <div class="overlay" style="background:rgba(44,62,80,.84);width:100%;min-height:100%;">
+            <div class="container downloadSection">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-12 text-center">
+                        <h2 class="wow fadeInLeft">Ready to Find Your <span>Perfect Nanny?</span></h2>
+                        <p class="wow fadeInRight" style="font-size:18px;color:rgba(255,255,255,0.9);padding-bottom:0;">
+                            Join thousands of happy families who found loving, reliable childcare through our service. Get started today — it only takes a few minutes.
+                        </p>
+                        <div class="btn-section wow fadeInUp">
+                            <a href="auth/register.php" class="btn-primary"><i class="fa fa-users"></i> Find a Nanny</a>
+                            <a href="pages/contact.php" class="btn-nanny"><i class="fa fa-phone"></i> Contact Us</a>
+                        </div>
+                        <div style="margin-top:30px;color:rgba(255,255,255,0.8);font-size:15px;">
+                            <i class="fa fa-shield" style="margin-right:5px;color:#F5A623;"></i> 100% Background Checked &nbsp;|&nbsp;
+                            <i class="fa fa-heart" style="margin-right:5px;color:#E85D75;"></i> Loving Care &nbsp;|&nbsp;
+                            <i class="fa fa-check-circle" style="margin-right:5px;color:#27ae60;"></i> Trusted by Families
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="assets/img/logo.png" alt="NannyConnect" style="height:40px;width:auto;margin-bottom:15px;opacity:0.9;">
+                <p style="font-size:14px;color:#aaa;line-height:1.8;">Connecting families with trusted, background-checked nannies across South Africa. Professional childcare you can rely on.</p>
+            </div>
+            <div class="col-sm-4 text-center">
+                <div class="social" style="margin-top:8px;">
+                    <ul>
+                        <li><a class="wow fadeInUp" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="wow fadeInUp" href="#" data-wow-delay="0.2s"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="wow fadeInUp" href="#" data-wow-delay="0.4s"><i class="fa fa-instagram"></i></a></li>
+                        <li><a class="wow fadeInUp" href="#" data-wow-delay="0.6s"><i class="fa fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+                <p style="font-size:13px;color:#888;margin-top:12px;">&copy; 2026 NannyConnect — Trusted Childcare</p>
+            </div>
+            <div class="col-sm-4 text-right">
+                <ul style="list-style:none;padding:0;margin:0;font-size:14px;">
+                    <li style="padding:4px 0;"><a href="pages/pricing.php">Pricing</a></li>
+                    <li style="padding:4px 0;"><a href="pages/safety.php">Safety</a></li>
+                    <li style="padding:4px 0;"><a href="pages/resources.php">Resources</a></li>
+                    <li style="padding:4px 0;"><a href="pages/contact.php">Contact</a></li>
+                    <li style="padding:4px 0;"><a href="auth/login.php">Log In</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<a href="#" class="scrollToTop"><i class="fa fa-chevron-up"></i></a>
+
+<!-- ===== LIBRARY JS ===== -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+<script>
+$(function() {
+    // Smooth scroll
+    $('a[href*=#]:not([href=#])').click(function() {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                $('html,body').animate({ scrollTop: target.offset().top }, 1000);
+                return false;
+            }
+        }
+    });
+
+    // Scrollspy
+    $('body').scrollspy({ target: '#navbar-scroll', offset: 80 });
+
+    // Close responsive menu on item click
+    $('.navbar-collapse ul li a').click(function() {
+        $('.navbar-toggle:visible').click();
+    });
+
+    // Gallery carousel
+    $("#screenshots").owlCarousel({
+        items: 4,
+        itemsCustom: [[0, 1], [480, 2], [768, 3], [992, 4]],
+        autoPlay: 4000,
+        stopOnHover: true
+    });
+
+    // Testimonials carousel
+    $("#owl-clients").owlCarousel({
+        navigation: false,
+        slideSpeed: 300,
+        autoHeight: true,
+        singleItem: true,
+        autoPlay: 5000
+    });
+
+    // Sticky nav
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 80) { $('#menu').addClass('is-sticky'); }
+        else { $('#menu').removeClass('is-sticky'); }
+    });
+
+    // Scroll to top button
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 500) { $('.scrollToTop').fadeIn(300); }
+        else { $('.scrollToTop').fadeOut(300); }
+    });
+    $('.scrollToTop').click(function(){
+        $('html, body').animate({scrollTop: 0}, 800);
+        return false;
+    });
+
+    // Simple lightbox
+    $(document).on('click', '[data-toggle="lightbox"]', function(e){
+        e.preventDefault();
+        var href = $(this).attr('href');
+        var $box = $('<div class="simple-lightbox"><span class="slb-close">&times;</span><img src="' + href + '"></div>');
+        $box.on('click', function(){ $(this).remove(); });
+        $('body').append($box);
+    });
+
+    // Touch detection
+    if ("ontouchstart" in window) {
+        document.documentElement.className += " touch";
+    }
+    if (!$("html").hasClass("touch")) {
+        $(".parallax").css("background-attachment", "fixed");
+    }
+
+    // Background resize for parallax
+    function backgroundResize(){
+        var windowH = $(window).height();
+        $(".parallax").each(function(){
+            var path = $(this);
+            var contW = path.width();
+            var contH = path.height();
+            var imgW = path.attr("data-img-width");
+            var imgH = path.attr("data-img-height");
+            if (!imgW || !imgH) return;
+            var ratio = imgW / imgH;
+            var diff = parseFloat(path.attr("data-diff")) || 0;
+            var remainingH = 0;
+            if (path.hasClass("parallax") && !$("html").hasClass("touch")) {
+                remainingH = windowH - contH;
+            }
+            imgH = contH + remainingH + diff;
+            imgW = imgH * ratio;
+            if (contW > imgW) { imgW = contW; imgH = imgW / ratio; }
+            path.data("resized-imgW", imgW);
+            path.data("resized-imgH", imgH);
+            path.css("background-size", imgW + "px " + imgH + "px");
+        });
+    }
+    $(window).resize(backgroundResize);
+    $(window).focus(backgroundResize);
+    backgroundResize();
+
+    // Parallax position
+    function parallaxPosition(){
+        var heightWindow = $(window).height();
+        var topWindow = $(window).scrollTop();
+        var bottomWindow = topWindow + heightWindow;
+        var currentWindow = (topWindow + bottomWindow) / 2;
+        $(".parallax").each(function(){
+            var path = $(this);
+            var height = path.height();
+            var top = path.offset().top;
+            var bottom = top + height;
+            if (bottomWindow > top && topWindow < bottom) {
+                var imgH = path.data("resized-imgH");
+                if (!imgH) return;
+                var min = 0;
+                var max = -imgH + heightWindow;
+                var overflowH = height < heightWindow ? imgH - height : imgH - heightWindow;
+                top = top - overflowH;
+                bottom = bottom + overflowH;
+                var value = min + (max - min) * (currentWindow - top) / (bottom - top);
+                var orizontalPosition = path.attr("data-oriz-pos") || "50%";
+                $(this).css("background-position", orizontalPosition + " " + value + "px");
+            }
+        });
+    }
+    if (!$("html").hasClass("touch")) {
+        $(window).resize(parallaxPosition);
+        $(window).scroll(parallaxPosition);
+        parallaxPosition();
+    }
+
+    // WOW animations
+    new WOW().init();
+});
+</script>
+</body>
+</html>

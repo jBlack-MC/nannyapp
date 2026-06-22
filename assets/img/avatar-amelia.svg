@@ -1,0 +1,59 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="circ"><circle cx="100" cy="100" r="100"/></clipPath>
+  </defs>
+  <g clip-path="url(#circ)">
+    <!-- sky blue background -->
+    <rect width="200" height="200" fill="#EFF6FF"/>
+    <!-- shoulders / cardigan (blue) -->
+    <path d="M28 200 Q34 150 100 144 Q166 150 172 200Z" fill="#3B82F6"/>
+    <!-- white collar -->
+    <path d="M82 148 L100 166 L118 148" fill="white" opacity="0.5"/>
+    <!-- neck -->
+    <rect x="89" y="136" width="22" height="17" rx="8" fill="#FDDBA8"/>
+    <!-- head -->
+    <ellipse cx="100" cy="99" rx="43" ry="49" fill="#FDDBA8"/>
+    <!-- chestnut hair back -->
+    <ellipse cx="100" cy="78" rx="43" ry="36" fill="#6B3A1F"/>
+    <!-- hair top shape -->
+    <path d="M57 90 Q57 46 100 42 Q143 46 143 90 Q135 54 100 52 Q65 54 57 90Z" fill="#6B3A1F"/>
+    <!-- side waves left -->
+    <path d="M57 90 Q50 108 52 128 Q53 140 60 150 Q55 138 54 126 Q52 112 57 96Z" fill="#6B3A1F"/>
+    <!-- side waves right -->
+    <path d="M143 90 Q150 108 148 128 Q147 140 140 150 Q145 138 146 126 Q148 112 143 96Z" fill="#6B3A1F"/>
+    <!-- wave texture left -->
+    <path d="M52 115 Q58 110 52 120 Q56 116 52 126" stroke="#4A2510" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- wave texture right -->
+    <path d="M148 115 Q142 110 148 120 Q144 116 148 126" stroke="#4A2510" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- face re-expose -->
+    <ellipse cx="100" cy="101" rx="36" ry="44" fill="#FDDBA8"/>
+    <!-- eyes (warm brown) -->
+    <ellipse cx="85" cy="96" rx="7" ry="6" fill="white"/>
+    <ellipse cx="115" cy="96" rx="7" ry="6" fill="white"/>
+    <circle cx="85" cy="96" r="4" fill="#3D1F05"/>
+    <circle cx="115" cy="96" r="4" fill="#3D1F05"/>
+    <circle cx="86.5" cy="94.5" r="1.5" fill="white"/>
+    <circle cx="116.5" cy="94.5" r="1.5" fill="white"/>
+    <!-- upper lashes -->
+    <path d="M78 92 L76 88" stroke="#3D1F05" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M81 90 L80 86" stroke="#3D1F05" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M92 90 L93 86" stroke="#3D1F05" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M108 90 L107 86" stroke="#3D1F05" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M119 90 L120 86" stroke="#3D1F05" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M122 92 L124 88" stroke="#3D1F05" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- eyebrows (arched) -->
+    <path d="M78 88 Q85 85 92 87" stroke="#4A2510" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M108 87 Q115 85 122 88" stroke="#4A2510" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- nose -->
+    <path d="M98 104 Q96 112 99 114 Q100 115 101 114 Q104 112 102 104" stroke="#CCA070" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- bright smile with teeth -->
+    <path d="M87 121 Q100 132 113 121" stroke="#CCA070" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M89 122 Q100 128 111 122 Q100 131 89 122Z" fill="white" opacity="0.8"/>
+    <!-- blush -->
+    <ellipse cx="76" cy="113" rx="10" ry="6" fill="#FFAAAA" opacity="0.38"/>
+    <ellipse cx="124" cy="113" rx="10" ry="6" fill="#FFAAAA" opacity="0.38"/>
+    <!-- gold stud earrings -->
+    <circle cx="56" cy="108" r="4.5" fill="#F59E0B"/>
+    <circle cx="144" cy="108" r="4.5" fill="#F59E0B"/>
+  </g>
+</svg>
