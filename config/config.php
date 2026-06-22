@@ -26,7 +26,17 @@ ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
 // --- HTTPS enforcement ---
-if (empty($_SERVER['HTTPS']) && $_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== '127.0.0.1') {
+function is_https_request(): bool
+{
+    $forwardedProto = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '';
+    if (is_string($forwardedProto) && strtolower($forwardedProto) === 'https') {
+        return true;
+    }
+
+    return !empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+}
+
+if (!is_https_request() && $_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== '127.0.0.1') {
     header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     exit;
 }
@@ -38,7 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.cookie_samesite', 'Lax');
     
     // HTTPS only in production
-    if (!empty($_SERVER['HTTPS']) || ($_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== '127.0.0.1')) {
+    if (is_https_request() || ($_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== '127.0.0.1')) {
         ini_set('session.cookie_secure', '1');
     }
     

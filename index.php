@@ -50,14 +50,43 @@ try {
     $stats = ['families' => 10000, 'nannies' => 1500, 'bookings' => 8923, 'rating' => 4.9];
 }
 
-$galleryFiles = [
-    'hero-nanny-SMceVYR7.jpg',
-    'download.jpg',
-    'download (1).jpg',
-    'download (2).jpg',
-    'download (3).jpg',
-    'download (4).jpg',
-];
+$galleryFiles = [];
+$galleryDir = __DIR__ . '/assets/img/gallery';
+if (is_dir($galleryDir)) {
+    $entries = scandir($galleryDir);
+    if (is_array($entries)) {
+        foreach ($entries as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $filePath = $galleryDir . '/' . $entry;
+            if (!is_file($filePath)) {
+                continue;
+            }
+
+            if (!preg_match('/\.(?:jpe?g|png|webp|gif)$/i', $entry)) {
+                continue;
+            }
+
+            $galleryFiles[] = 'gallery/' . $entry;
+        }
+    }
+}
+
+if ($galleryFiles) {
+    shuffle($galleryFiles);
+    $galleryFiles = array_slice($galleryFiles, 0, 8);
+} else {
+    $galleryFiles = [
+        'hero-nanny-SMceVYR7.jpg',
+        'download.jpg',
+        'download (1).jpg',
+        'download (2).jpg',
+        'download (3).jpg',
+        'download (4).jpg',
+    ];
+}
 
 $avatarCycle = [
     'assets/img/avatar-amelia.svg',
@@ -256,7 +285,7 @@ require __DIR__ . '/includes/header.php';
         </div>
         <div class="home-gallery-grid">
             <?php foreach ($galleryFiles as $file): ?>
-                <?php $imgUrl = url('assets/img/' . rawurlencode($file)); ?>
+                <?php $imgUrl = url('assets/img/' . str_replace('%2F', '/', rawurlencode($file))); ?>
                 <figure class="home-gallery-item card reveal-item">
                     <a class="gallery-link" href="<?= e($imgUrl) ?>" data-toggle="lightbox" aria-label="Open gallery image">
                         <img src="<?= e($imgUrl) ?>" alt="Childcare gallery image" loading="lazy" decoding="async">

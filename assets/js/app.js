@@ -495,11 +495,8 @@
 
   /* ---------- 9. Dark mode toggle ---------- */
   (function () {
-    // Apply saved or system preference before paint to avoid flash.
-    var saved = null;
-    try { saved = localStorage.getItem('na_theme'); } catch (e) {}
-    var pref = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', pref);
+    // Always start in light mode; the toggle can switch and persist later.
+    document.documentElement.setAttribute('data-theme', 'light');
 
     var btn = document.getElementById('darkToggle');
     if (!btn) return;
