@@ -1788,11 +1788,17 @@ details[open]{background:var(--bg)}
 .pricing-rate-copy{margin:4px 0 0}
 .pricing-rate-btn{flex:none}
 
-.faq-search-form{max-width:560px;display:flex;gap:10px;margin-bottom:32px}
-.faq-search-input{flex:1;padding:.65rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:.95rem}
+.faq-search-form{max-width:760px;width:100%;display:flex;align-items:stretch;gap:12px;margin:0 auto 32px}
+.faq-search-input{flex:1;min-height:56px;padding:.65rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:.95rem}
+.faq-search-form .btn{min-height:56px;white-space:nowrap;padding-inline:28px}
 .faq-search-result{margin-bottom:16px}
 .faq-help-card{margin-top:32px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:24px 28px}
 .faq-help-copy{margin:4px 0 0}
+
+@media (max-width: 760px){
+    .faq-search-form{flex-direction:column}
+    .faq-search-form .btn{width:100%;justify-content:center}
+}
 
 /* ── Pagination ─────────────────────────────────────── */
 .pagination{display:flex;align-items:center;gap:10px;margin-top:28px;flex-wrap:wrap}
