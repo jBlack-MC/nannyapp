@@ -26,6 +26,25 @@ $SA_CITIES = [
 ];
 $STREETS = ['Elm Street','Rose Avenue','Oak Road','Pine Close','Maple Drive','Cedar Lane','Jacaranda Way','Protea Street'];
 
+// Stock portrait photos used as demo profile pictures — cycled across seeded
+// accounts. Real users uploading their own photo later is never overwritten
+// (see the "profile_image IS NULL" guard below).
+$NANNY_PHOTOS = [
+    'assets/img/people/nanny-1.jpg',
+    'assets/img/people/nanny-2.jpg',
+    'assets/img/people/nanny-3.jpg',
+    'assets/img/people/nanny-4.jpg',
+    'assets/img/people/nanny-5.jpg',
+    'assets/img/people/nanny-6.jpg',
+];
+$PARENT_PHOTOS = [
+    'assets/img/people/parent-1.jpg',
+    'assets/img/people/parent-2.jpg',
+    'assets/img/people/parent-3.jpg',
+    'assets/img/people/parent-4.jpg',
+];
+$updatePhoto = db()->prepare('UPDATE users SET profile_image=? WHERE id=? AND profile_image IS NULL');
+
 /* ════════════════════════════════════════════════════════════
    ENSURE UPLOAD DIRECTORIES EXIST
    ════════════════════════════════════════════════════════════ */
@@ -77,8 +96,19 @@ foreach ($parents_data as $i => [$name, $email, $city, $phone]) {
     }
     $parentIds[] = $uid;
     try { $insertParentProfile->execute([$uid, '+27 82 999 '.str_pad($i+1,4,'0',STR_PAD_LEFT), rand(1,3)]); } catch (Throwable) {}
+    try { $updatePhoto->execute([$PARENT_PHOTOS[$i % count($PARENT_PHOTOS)], $uid]); } catch (Throwable) {}
 }
 seed_log("Inserted/found " . count($parentIds) . " parents.");
+
+// Backfill a photo for the original demo parents too (parent@nanny.app,
+// james@nanny.app) — they were seeded with no profile_image at all.
+try {
+    $origParents = db()->query("SELECT id FROM users WHERE role='parent' AND email IN ('parent@nanny.app','james@nanny.app')")
+        ->fetchAll(PDO::FETCH_COLUMN);
+    foreach ($origParents as $i => $opid) {
+        $updatePhoto->execute([$PARENT_PHOTOS[$i % count($PARENT_PHOTOS)], (int) $opid]);
+    }
+} catch (Throwable) {}
 
 /* ════════════════════════════════════════════════════════════
    2. NANNIES (20)
@@ -126,6 +156,7 @@ foreach ($nannies_data as $i => [$name, $email, $city, $rate, $exp, $langs, $ski
     }
     $nannyIds[] = ['id' => $uid, 'rate' => $rate, 'name' => $name, 'city' => $city];
     try { $insertNannyProfile->execute([$uid, $bio, $city, $rate, $exp, $skills, $langs, $rating]); } catch (Throwable) {}
+    try { $updatePhoto->execute([$NANNY_PHOTOS[$i % count($NANNY_PHOTOS)], $uid]); } catch (Throwable) {}
 }
 seed_log("Inserted/found " . count($nannyIds) . " nannies.");
 
@@ -183,9 +214,23 @@ $insertBooking = db()->prepare(
     "INSERT INTO bookings (parent_id, nanny_id, date_time, duration, location, notes, status, booking_address, booking_ref, created_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW() - INTERVAL ? DAY)"
 );
-$insertPayment = db()->prepare(
+// One payment row per booking, matching the real escrow states a booking
+// would actually be in by the time it reaches each status.
+$insertPaymentPending  = db()->prepare(
     "INSERT IGNORE INTO payments (booking_id, amount, method, status, created_at)
-     VALUES (?, ?, 'card', 'paid', NOW() - INTERVAL ? DAY)"
+     VALUES (?, ?, 'card', 'pending', NOW() - INTERVAL ? DAY)"
+);
+$insertPaymentHeld = db()->prepare(
+    "INSERT IGNORE INTO payments (booking_id, amount, method, status, payout_status, created_at)
+     VALUES (?, ?, 'card', 'paid', 'held', NOW() - INTERVAL ? DAY)"
+);
+$insertPaymentReleased = db()->prepare(
+    "INSERT IGNORE INTO payments (booking_id, amount, method, status, payout_status, released_at, created_at)
+     VALUES (?, ?, 'card', 'paid', 'released', NOW() - INTERVAL ? DAY, NOW() - INTERVAL ? DAY)"
+);
+$insertPaymentFailed = db()->prepare(
+    "INSERT IGNORE INTO payments (booking_id, amount, method, status, created_at)
+     VALUES (?, ?, 'card', 'failed', NOW() - INTERVAL ? DAY)"
 );
 
 $statusPlan = array_merge(
@@ -228,10 +273,23 @@ foreach ($statusPlan as $idx => $status) {
         $bid = (int)db()->lastInsertId();
         if ($bid) {
             $bookingIds[] = ['id'=>$bid,'pid'=>$pid,'nid'=>$nid,'total'=>$total,'status'=>$status,'days_ago'=>$daysAgo];
-            if ($status === 'completed') {
-                $completedBks[] = ['id'=>$bid,'pid'=>$pid,'nid'=>$nid,'total'=>$total,'days_ago'=>$daysAgo];
-                try { $insertPayment->execute([$bid, $total, $daysAgo]); } catch (Throwable) {}
-            }
+            try {
+                switch ($status) {
+                    case 'completed':
+                        $completedBks[] = ['id'=>$bid,'pid'=>$pid,'nid'=>$nid,'total'=>$total,'days_ago'=>$daysAgo];
+                        $insertPaymentReleased->execute([$bid, $total, $daysAgo, $daysAgo]);
+                        break;
+                    case 'confirmed':
+                        $insertPaymentHeld->execute([$bid, $total, $daysAgo]);
+                        break;
+                    case 'pending':
+                        $insertPaymentPending->execute([$bid, $total, $daysAgo]);
+                        break;
+                    case 'cancelled':
+                        $insertPaymentFailed->execute([$bid, $total, $daysAgo]);
+                        break;
+                }
+            } catch (Throwable) {}
             $bInserted++;
         }
     } catch (Throwable $e) { seed_err("Booking error: " . $e->getMessage()); }
@@ -364,7 +422,7 @@ $conversations = [
 ];
 
 $insertMsg = db()->prepare(
-    "INSERT IGNORE INTO chat_messages (sender_id, receiver_id, message, is_read, created_at)
+    "INSERT IGNORE INTO chat_messages (sender_id, receiver_id, content, is_read, created_at)
      VALUES (?, ?, ?, 1, NOW() - INTERVAL ? HOUR)"
 );
 $msgsInserted = 0;
@@ -392,7 +450,7 @@ seed_log("Inserted $msgsInserted chat messages.");
    9. SAVED NANNIES
    ════════════════════════════════════════════════════════════ */
 $insertSaved = db()->prepare(
-    "INSERT IGNORE INTO saved_nannies (parent_id, nanny_id, saved_at) VALUES (?, ?, NOW() - INTERVAL ? DAY)"
+    "INSERT IGNORE INTO saved_nannies (parent_id, nanny_id, created_at) VALUES (?, ?, NOW() - INTERVAL ? DAY)"
 );
 $savedInserted = 0;
 foreach ($parentIds as $pid) {
