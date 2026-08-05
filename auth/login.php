@@ -90,6 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (($user['status'] ?? 'active') === 'suspended') {
                 $errors[] = 'Your account has been suspended. Please contact support.';
 
+            /* ── Admin is web-only — not available in the packaged app ── */
+            } elseif ($user['role'] === 'admin' && is_native_app_request()) {
+                $errors[] = 'Admin accounts can only sign in from a web browser. Please open ' . APP_NAME . ' in Chrome, Safari or another browser to access the admin panel.';
+
             /* ── Email verification check ─────────────────────────── */
             } elseif (isset($user['email_verified']) && (int)$user['email_verified'] === 0) {
                 $errors[] = 'Please verify your email address before logging in. Check your inbox for a verification link.';

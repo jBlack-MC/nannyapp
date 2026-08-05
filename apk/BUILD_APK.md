@@ -4,6 +4,16 @@ The Nanny-App backend is **PHP + MySQL**, so the Android app is a thin native
 **WebView wrapper** around the live site (the standard way to ship a PHP app as
 an APK). Two supported routes — pick one.
 
+> **Admin is intentionally unavailable inside this app.** The server detects
+> requests carrying the `NannyAppCordova` user-agent marker (set below via
+> `AppendUserAgent`) or an installed-PWA cookie and blocks admin login/pages
+> there, bouncing to `admin-unavailable.php` instead — admins must use a
+> regular browser. See `is_native_app_request()` in `includes/functions.php`.
+> **If you build with Route B (Capacitor) instead of the provided
+> `config.xml`, you must add an equivalent user-agent override** (Capacitor's
+> `appendUserAgent`/`overrideUserAgent` server option) or the server-side
+> block won't recognize that build as the app.
+
 > An APK cannot be produced from PHP/XAMPP alone — it requires the Android SDK
 > + Java (JDK) + Gradle. Install **Android Studio** first (it bundles all three).
 
@@ -90,3 +100,15 @@ apksigner sign --ks nanny.keystore --out nanny-app.apk nanny-aligned.apk
 - The app is also an installable **PWA**: open the site in Chrome on Android →
   menu → *Install app / Add to Home screen*. That gives an app-like icon with
   no build step, useful for quick demos.
+- Rebuilding after a server-side update (new `config.xml` version, updated
+  `service-worker.js` cache name) is enough to ship the change — the WebView
+  always loads the live site, so most updates don't need a new APK at all.
+  Only bump/rebuild the APK itself when `config.xml` (permissions, min SDK,
+  splash, etc.) changes.
+
+## Changelog
+- **1.1.0** — Admin dashboard now blocked inside the packaged app/installed
+  PWA (web-browser-only by design). Escrow-style payment holds with a
+  parent-issued check-in PIN before a nanny is paid out. Admin profile
+  records.
+- **1.0.0** — Initial release.

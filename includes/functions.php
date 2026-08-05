@@ -136,11 +136,33 @@ function require_login(): void
 /** Allow only the given role(s); otherwise bounce to the right dashboard. */
 function require_role(string ...$roles): void
 {
+    // Admin is web-only by design — never usable from the packaged app / installed PWA.
+    if (in_array('admin', $roles, true) && is_native_app_request()) {
+        redirect('admin-unavailable.php');
+    }
     require_login();
     if (!in_array(user_role(), $roles, true)) {
         flash('You do not have access to that area.', 'error');
         redirect(dashboard_path(user_role()));
     }
+}
+
+// ----------------------------------------------------------------------
+//  Native app / installed PWA detection — admin is web-only by design
+// ----------------------------------------------------------------------
+/**
+ * True when this request is coming from the packaged Cordova app (tagged via
+ * config.xml's AppendUserAgent) or an installed PWA (tagged client-side via
+ * a cookie set in includes/header.php when display-mode is standalone).
+ * Used to keep the admin panel reachable only from a normal web browser.
+ */
+function is_native_app_request(): bool
+{
+    $ua = (string) ($_SERVER['HTTP_USER_AGENT'] ?? '');
+    if (str_contains($ua, 'NannyAppCordova')) {
+        return true;
+    }
+    return ($_COOKIE['na_app_shell'] ?? '') === '1';
 }
 
 /** Where each role lands after login. */

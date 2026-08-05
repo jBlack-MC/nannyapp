@@ -23,6 +23,19 @@ $isActive = static function (string $path, bool $prefix = false) use ($requestPa
     <meta name="description" content="Find and book trusted, background-checked nannies near you — safely and confidently, whenever you need childcare.">
     <title><?= isset($pageTitle) ? e($pageTitle) . ' — ' : '' ?><?= APP_NAME ?></title>
     <script>document.documentElement.className = 'js';</script>
+    <script>
+    // Tag installed-PWA/standalone sessions so the server can keep admin
+    // pages web-browser-only (see is_native_app_request() in functions.php).
+    (function () {
+        try {
+            var standalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+                || window.navigator.standalone === true;
+            if (standalone) {
+                document.cookie = 'na_app_shell=1; path=/; max-age=31536000; SameSite=Lax';
+            }
+        } catch (e) {}
+    })();
+    </script>
     <link rel="manifest" href="<?= url('manifest.webmanifest') ?>">
     <link rel="icon" href="<?= url('assets/img/icon.svg') ?>" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">

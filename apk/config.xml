@@ -4,7 +4,7 @@
   This wraps the live PHP site in a native WebView. See BUILD_APK.md.
   Set <content src> to the URL where your PHP app is hosted/served.
 -->
-<widget id="app.nanny.knights" version="1.0.0"
+<widget id="app.nanny.knights" version="1.1.0"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
@@ -33,6 +33,11 @@
     <preference name="LoadUrlTimeoutValue" value="60000" />
     <preference name="android-minSdkVersion" value="24" />
     <preference name="android-targetSdkVersion" value="34" />
+
+    <!-- Tags every request from this packaged app with a marker the server
+         checks (see is_native_app_request() in includes/functions.php) so
+         the admin panel stays reachable only from a normal web browser. -->
+    <preference name="AppendUserAgent" value="NannyAppCordova" />
 
     <platform name="android">
         <allow-intent href="market:*" />

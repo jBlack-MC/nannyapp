@@ -58,3 +58,16 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/email.php';
+
+// --- Admin is web-only: kill any admin session that's somehow active
+//     inside the packaged app / installed PWA (e.g. cookies carried over
+//     from a browser session before the PWA was installed). ------------
+if (!empty($_SESSION['user_id']) && is_native_app_request()) {
+    $sessionUser = current_user();
+    if ($sessionUser && $sessionUser['role'] === 'admin') {
+        $_SESSION = [];
+        session_destroy();
+        session_start();
+        flash('Admin accounts can only sign in from a web browser — not the app.', 'error');
+    }
+}
