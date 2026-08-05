@@ -18,6 +18,19 @@ $isActive = static function (string $path, bool $prefix = false) use ($requestPa
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
+    <script>
+    // Apply the saved theme before first paint so dark mode stays on across
+    // every page instead of flashing back to light on each navigation.
+    (function () {
+        try {
+            var saved = localStorage.getItem('na_theme');
+            if (saved !== 'dark' && saved !== 'light') {
+                saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', saved);
+        } catch (e) {}
+    })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1e5f9e">
     <meta name="description" content="Find and book trusted, background-checked nannies near you — safely and confidently, whenever you need childcare.">

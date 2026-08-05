@@ -131,7 +131,7 @@
     border-color: var(--blue-200, #bfdbfe);
 }
 .nanny-card {
-    background: #fff;
+    background: var(--card, #fff);
     border-radius: 24px;
     overflow: hidden;
 }
@@ -246,7 +246,7 @@
 }
 .tcard blockquote {
     margin: 0 0 14px;
-    color: #334155;
+    color: var(--ink, #334155);
     font-size: 1.02rem;
 }
 .t-who {
@@ -263,7 +263,7 @@
 .price-card ul {
     margin: 0;
     padding-left: 18px;
-    color: #475569;
+    color: var(--muted, #475569);
 }
 .featured-plan {
     border: 2px solid var(--blue-500, #3b9be0);

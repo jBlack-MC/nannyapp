@@ -331,7 +331,7 @@ img.avatar{object-fit:cover}
 .hero .pill{background:var(--blue-50);color:var(--blue-700);border:1px solid var(--blue-100)}
 .hero .pill .ic{color:#f5a623}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-start;margin-top:4px}
-.hero .btn:not(.btn-primary){background:#fff;color:var(--ink);border-color:var(--line)}
+.hero .btn:not(.btn-primary){background:var(--card);color:var(--ink);border-color:var(--line)}
 .hero .btn:not(.btn-primary):hover{background:var(--blue-50);border-color:var(--blue-300);color:var(--blue-700)}
 .hero .trust-bar{display:none}
 .hero-sub-cta{margin:0;color:var(--muted);font-weight:600}
@@ -1060,6 +1060,7 @@ details[open]{background:var(--bg)}
     --ok-bg:rgba(16,185,129,.12);
     --warn-bg:rgba(245,158,11,.10);
     --bad-bg:rgba(239,68,68,.10);
+    --surface-2:#111f35;
 }
 [data-theme="dark"] body{background:var(--bg)}
 [data-theme="dark"] .card{background:var(--card);border-color:var(--line)}
@@ -1581,6 +1582,9 @@ details[open]{background:var(--bg)}
 
 .chat-convo-info{flex:1;min-width:0}
 .chat-convo-role{font-size:.78rem}
+.chat-convo-preview{font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-convo-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.chat-convo-time{font-size:.7rem;white-space:nowrap}
 
 .notif-card-flat{padding:0}
 

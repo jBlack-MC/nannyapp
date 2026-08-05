@@ -205,6 +205,59 @@ function increment_rate_limit(string $key): void
 }
 
 // ----------------------------------------------------------------------
+//  Chat messages — shared by messages.php (form fallback) and the
+//  messages_send.php / messages_poll.php AJAX endpoints, so validation
+//  and rate limiting stay in one place regardless of entry point.
+// ----------------------------------------------------------------------
+/**
+ * Validate and persist a chat message.
+ * @return array{ok:bool, error?:string, id?:int, content?:string, created_at?:string, time_label?:string}
+ */
+function send_chat_message(int $fromId, int $toId, string $body): array
+{
+    $body = trim($body);
+
+    if ($toId <= 0 || $toId === $fromId) {
+        return ['ok' => false, 'error' => 'That recipient is not available.'];
+    }
+
+    $valid = db()->prepare('SELECT 1 FROM users WHERE id=?');
+    $valid->execute([$toId]);
+    if (!$valid->fetch()) {
+        return ['ok' => false, 'error' => 'That recipient is not available.'];
+    }
+
+    if ($body === '') {
+        return ['ok' => false, 'error' => 'Please type a message.'];
+    }
+
+    $rateLimitKey = 'chat_msg_' . $fromId;
+    if (is_rate_limited($rateLimitKey, 30, 300)) {
+        return ['ok' => false, 'error' => 'You are sending messages too quickly. Please wait a moment and try again.'];
+    }
+    increment_rate_limit($rateLimitKey);
+
+    $content = mb_substr($body, 0, 1000);
+    db()->prepare('INSERT INTO chat_messages (sender_id, receiver_id, content) VALUES (?,?,?)')
+        ->execute([$fromId, $toId, $content]);
+    $id = (int) db()->lastInsertId();
+
+    $sender = db()->prepare('SELECT full_name FROM users WHERE id=?');
+    $sender->execute([$fromId]);
+    $senderName = (string) $sender->fetchColumn();
+
+    notify($toId, 'New message from ' . $senderName, mb_substr($content, 0, 80), 'messages.php?with=' . $fromId);
+
+    return [
+        'ok'         => true,
+        'id'         => $id,
+        'content'    => $content,
+        'created_at' => date('Y-m-d H:i:s'),
+        'time_label' => date('d M, H:i'),
+    ];
+}
+
+// ----------------------------------------------------------------------
 //  Notifications  (non-critical: never let them break a core flow)
 // ----------------------------------------------------------------------
 function notify(int $userId, string $title, string $message, ?string $url = null): void

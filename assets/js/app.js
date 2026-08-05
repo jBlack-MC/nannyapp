@@ -493,11 +493,11 @@
     });
   }
 
-  /* ---------- 9. Dark mode toggle ---------- */
+  /* ---------- 9. Dark mode toggle ----------
+     The active theme is already applied by the inline script in
+     includes/header.php (runs before first paint, reads localStorage).
+     This just wires up the button and persists changes. */
   (function () {
-    // Always start in light mode; the toggle can switch and persist later.
-    document.documentElement.setAttribute('data-theme', 'light');
-
     var btn = document.getElementById('darkToggle');
     if (!btn) return;
     function applyTheme(t) {
