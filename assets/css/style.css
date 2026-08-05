@@ -1943,6 +1943,19 @@ details[open]{background:var(--bg)}
 .booking-timeline{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0;padding:0;list-style:none}
 .timeline-step{background:#eef3f8;color:#0f172a;padding:.65rem 1rem;border-radius:999px;font-size:.82rem;font-weight:700;border:1px solid #dbeafe}
 .timeline-step.active{background:linear-gradient(135deg,var(--blue-100),var(--blue-50));color:var(--blue-800);border-color:transparent}
+
+/* Check-in PIN / dispute UI (booking presence verification) */
+.mb-4{margin-bottom:4px}
+.stack-tight{display:flex;flex-direction:column;gap:6px}
+.booking-actions-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.checkin-pin-box{display:flex;flex-direction:column;gap:2px;background:var(--warn-bg);border:1px solid var(--warn);border-radius:10px;padding:8px 10px;margin-bottom:6px;max-width:220px}
+.checkin-pin{font-family:monospace;font-size:1.3rem;letter-spacing:3px;color:var(--warn)}
+.checkin-form{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
+.checkin-input{width:130px;padding:.4rem .6rem;border:1px solid var(--line);border-radius:8px;font-family:monospace;letter-spacing:2px}
+.dispute-details{margin-top:6px}
+.dispute-details summary{cursor:pointer;color:var(--bad);list-style:none}
+.dispute-details summary::-webkit-details-marker{display:none}
+.dispute-details textarea{width:100%;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:.4rem .6rem;font-family:inherit}
 @media(max-width:900px){
     .wizard-steps{gap:2px}
     .ws-label{display:none}

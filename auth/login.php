@@ -65,6 +65,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password_hash'])) {
+            // Backward compatibility: old seed/demo databases created these accounts as unverified.
+            if (isset($user['email_verified']) && (int)$user['email_verified'] === 0) {
+                $demoEmails = [
+                    'admin@nanny.app',
+                    'parent@nanny.app',
+                    'james@nanny.app',
+                    'amelia@nanny.app',
+                    'margaret@nanny.app',
+                    'jasmine@nanny.app',
+                ];
+
+                if (in_array(strtolower((string)($user['email'] ?? '')), $demoEmails, true)) {
+                    try {
+                        db()->prepare('UPDATE users SET email_verified = 1 WHERE id = ?')->execute([$user['id']]);
+                        $user['email_verified'] = 1;
+                    } catch (Throwable) {
+                        // Keep normal verification flow if update fails.
+                    }
+                }
+            }
 
             /* ── Suspended check ──────────────────────────────────── */
             if (($user['status'] ?? 'active') === 'suspended') {

@@ -2,10 +2,12 @@
 require_once __DIR__ . '/../config/config.php';
 require_role('parent');
 
+auto_release_stale_payments();
+
 $me = current_user()['id'];
 
 $payments = db()->prepare(
-    "SELECT pay.*, b.date_time, b.duration, b.location, b.status AS booking_status,
+    "SELECT pay.*, b.date_time, b.duration, b.location, b.status AS booking_status, b.dispute_reason,
             u.full_name AS nanny_name
      FROM payments pay
      JOIN bookings b  ON b.id  = pay.booking_id
@@ -65,6 +67,7 @@ require __DIR__ . '/../includes/header.php';
                         <th>Amount</th>
                         <th>Method</th>
                         <th>Status</th>
+                        <th>Payout</th>
                         <th>Reference</th>
                     </tr>
                 </thead>
@@ -78,6 +81,15 @@ require __DIR__ . '/../includes/header.php';
                         <td><strong>R<?= number_format((float)$r['amount'], 2) ?></strong></td>
                         <td class="muted"><?= e(ucfirst($r['method'] ?? 'Card')) ?></td>
                         <td><?= status_badge($r['status']) ?></td>
+                        <td>
+                            <?php if ($r['booking_status'] === 'disputed'): ?>
+                                <span class="muted text-xs">Under review</span>
+                            <?php elseif ($r['payout_status']): ?>
+                                <?= status_badge($r['payout_status']) ?>
+                            <?php else: ?>
+                                <span class="muted">—</span>
+                            <?php endif; ?>
+                        </td>
                         <td class="muted table-txn"><?= $r['transaction_id'] ? e(substr($r['transaction_id'], 0, 18)) . '…' : '—' ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -88,7 +100,7 @@ require __DIR__ . '/../includes/header.php';
 </div>
 
 <div class="card card-note-info">
-    <h3>🔒 Secure payments</h3>
-    <p class="muted">All transactions are processed securely. Contact support if you have a dispute about a charge.</p>
+    <h3>🔒 Secure, held payments</h3>
+    <p class="muted">When a nanny accepts a booking your card is charged, but the money is held in escrow — not the nanny's yet. It's only released once you confirm the session actually happened (or automatically after 48 hours). If a nanny never arrives, cancel the booking or report the problem from <a href="<?= url('parent/bookings.php') ?>">My bookings</a> and you'll be refunded.</p>
 </div>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

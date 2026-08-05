@@ -38,16 +38,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Load pending nannies
-$pending = db()->query(
-    "SELECT u.id, u.full_name, u.email, u.profile_image, u.created_at,
-            p.bio, p.experience_years, p.hourly_rate, p.location,
-            p.skills, p.qualifications, p.specialisations, p.languages,
-            p.verification_status
-     FROM nanny_profiles p JOIN users u ON u.id=p.user_id
-     WHERE p.verification_status IN ('pending','rejected')
-     ORDER BY u.created_at ASC"
-)->fetchAll();
+// Load pending nannies (with backward-compat fallback for older schemas)
+try {
+    $pending = db()->query(
+        "SELECT u.id, u.full_name, u.email, u.profile_image, u.created_at,
+                p.bio, p.experience_years, p.hourly_rate, p.location,
+                p.skills, p.qualifications, p.specialisations, p.languages,
+                p.verification_status
+         FROM nanny_profiles p JOIN users u ON u.id=p.user_id
+         WHERE p.verification_status IN ('pending','rejected')
+         ORDER BY u.created_at ASC"
+    )->fetchAll();
+} catch (Throwable) {
+    $pending = db()->query(
+        "SELECT u.id, u.full_name, u.email, u.profile_image, u.created_at,
+                p.bio, p.experience_years, p.hourly_rate, p.location,
+                p.skills, p.verification_status
+         FROM nanny_profiles p JOIN users u ON u.id=p.user_id
+         WHERE p.verification_status IN ('pending','rejected')
+         ORDER BY u.created_at ASC"
+    )->fetchAll();
+
+    foreach ($pending as &$row) {
+        $row['qualifications'] = $row['qualifications'] ?? '';
+        $row['specialisations'] = $row['specialisations'] ?? '';
+        $row['languages'] = $row['languages'] ?? '';
+    }
+    unset($row);
+}
 
 // Load pending documents
 $pendingDocs = [];

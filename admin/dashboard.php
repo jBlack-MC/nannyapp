@@ -444,6 +444,7 @@ require __DIR__ . '/../includes/header.php';
         <a class="btn" href="<?= url('admin/reports.php') ?>">Reports</a>
         <a class="btn action-card-warn" href="<?= url('migrate_v2.php') ?>">Run DB migration v2</a>
         <a class="btn action-card-warn" href="<?= url('migrate_v3.php') ?>">Run DB migration v3</a>
+        <a class="btn action-card-warn" href="<?= url('migrate_v4.php') ?>">Run DB migration v4</a>
     </div>
     <p class="muted text-xs mt-4">Only run migrations if you have not yet applied them to this database. Requires admin login.</p>
 </div>

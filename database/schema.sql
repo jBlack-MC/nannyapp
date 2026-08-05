@@ -151,19 +151,19 @@ CREATE TABLE contact_messages (
 SET @pw = '$2y$10$tsFm/578qCWodJOPBwCJ0OYdTjA9FjOKQT/vZwgt.xdFiPQKRWu66';
 
 -- Admin
-INSERT INTO users (full_name, email, phone, password_hash, role) VALUES
-('Site Administrator', 'admin@nanny.app', '0670000000', @pw, 'admin');
+INSERT INTO users (full_name, email, phone, password_hash, role, email_verified) VALUES
+('Site Administrator', 'admin@nanny.app', '0670000000', @pw, 'admin', 1);
 
 -- Parents
-INSERT INTO users (full_name, email, phone, password_hash, role) VALUES
-('Thandi Nkosi',  'parent@nanny.app', '0671111111', @pw, 'parent'),
-('James Carter',  'james@nanny.app',  '0672222222', @pw, 'parent');
+INSERT INTO users (full_name, email, phone, password_hash, role, email_verified) VALUES
+('Thandi Nkosi',  'parent@nanny.app', '0671111111', @pw, 'parent', 1),
+('James Carter',  'james@nanny.app',  '0672222222', @pw, 'parent', 1);
 
 -- Nannies (users)
-INSERT INTO users (full_name, email, phone, password_hash, role) VALUES
-('Amelia Carter',   'amelia@nanny.app',   '0673333333', @pw, 'nanny'),
-('Margaret Lopez',  'margaret@nanny.app', '0674444444', @pw, 'nanny'),
-('Jasmine Williams','jasmine@nanny.app',  '0675555555', @pw, 'nanny');
+INSERT INTO users (full_name, email, phone, password_hash, role, email_verified) VALUES
+('Amelia Carter',   'amelia@nanny.app',   '0673333333', @pw, 'nanny', 1),
+('Margaret Lopez',  'margaret@nanny.app', '0674444444', @pw, 'nanny', 1),
+('Jasmine Williams','jasmine@nanny.app',  '0675555555', @pw, 'nanny', 1);
 
 -- Nanny profiles (link to the nanny users created above)
 INSERT INTO nanny_profiles (user_id, bio, experience_years, hourly_rate, location, skills, availability, verification_status, average_rating)

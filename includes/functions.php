@@ -336,25 +336,19 @@ function nanny_has_booking_conflict(int $nannyId, string $startDateTime, float $
 function render_booking_timeline(array $booking): string
 {
     $status = $booking['status'] ?? 'pending';
-    $paid   = ($booking['pay_status'] ?? '') === 'paid' || ($booking['payment_status'] ?? '') === 'paid';
-    $now    = new DateTimeImmutable();
-    $started = false;
-    if (!empty($booking['date_time'])) {
-        try {
-            $started = $now >= new DateTimeImmutable($booking['date_time']);
-        } catch (Throwable) {
-            $started = false;
-        }
-    }
 
-    $accepted = in_array($status, ['confirmed', 'completed'], true);
+    $accepted  = in_array($status, ['confirmed', 'in_progress', 'completed'], true);
+    $checkedIn = !empty($booking['checked_in_at']) || in_array($status, ['in_progress', 'completed'], true);
+    $checkedOut = !empty($booking['checked_out_at']) || $status === 'completed';
+    $confirmed = !empty($booking['parent_confirmed_at']) || $status === 'completed';
+
     $steps = [
-        'Pending'     => $status === 'pending',
-        'Accepted'    => $accepted,
-        'Paid'        => $accepted && $paid,
-        'In progress' => $status === 'confirmed' && $paid && $started,
-        'Completed'   => $status === 'completed',
-        'Reviewed'    => !empty($booking['reviewed']) && $status === 'completed',
+        'Pending'      => $status === 'pending',
+        'Accepted'     => $accepted,
+        'Nanny arrived' => $checkedIn,
+        'Session done' => $checkedOut,
+        'Confirmed & paid' => $confirmed,
+        'Reviewed'     => !empty($booking['reviewed']) && $status === 'completed',
     ];
 
     $html = '<div class="booking-timeline">';
@@ -372,22 +366,81 @@ function status_badge(string $status): string
         'confirmed'   => 'badge-ok',
         'verified'    => 'badge-ok',
         'paid'        => 'badge-ok',
+        'held'        => 'badge-warn',
+        'released'    => 'badge-ok',
         'completed'   => 'badge-ok',
         'resolved'    => 'badge-ok',
         'rejected'    => 'badge-bad',
         'cancelled'   => 'badge-bad',
         'failed'      => 'badge-bad',
         'suspended'   => 'badge-bad',
+        'disputed'    => 'badge-bad',
         'open'        => 'badge-warn',
         'in_progress' => 'badge-warn',
         'closed'      => 'badge-muted',
     ];
     $labels = [
         'in_progress' => 'In progress',
+        'held'        => 'Held in escrow',
+        'released'    => 'Released to nanny',
+        'disputed'    => 'Disputed',
     ];
     $cls   = $map[$status] ?? 'badge-muted';
     $label = $labels[$status] ?? ucfirst($status);
     return '<span class="badge ' . $cls . '">' . e($label) . '</span>';
+}
+
+// ----------------------------------------------------------------------
+//  Booking presence verification (check-in PIN) & escrow payouts
+// ----------------------------------------------------------------------
+
+/** Generate a fresh 6-digit numeric check-in PIN. */
+function generate_check_in_code(): string
+{
+    return str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+}
+
+/**
+ * Safety net: if a nanny checked out and the parent never confirmed or
+ * disputed within the grace window, auto-release the held payment so the
+ * nanny isn't stuck waiting forever. Cheap + idempotent — safe to call on
+ * any page load for pages that display bookings/payments.
+ */
+function auto_release_stale_payments(int $graceHours = 48): void
+{
+    try {
+        $stmt = db()->prepare(
+            "SELECT id FROM bookings
+             WHERE status = 'in_progress'
+               AND checked_out_at IS NOT NULL
+               AND parent_confirmed_at IS NULL
+               AND checked_out_at < DATE_SUB(NOW(), INTERVAL ? HOUR)"
+        );
+        $stmt->execute([$graceHours]);
+        $ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        foreach ($ids as $id) {
+            $id = (int) $id;
+            db()->prepare(
+                "UPDATE bookings SET status='completed', parent_confirmed_at=NOW() WHERE id=? AND status='in_progress'"
+            )->execute([$id]);
+            db()->prepare(
+                "UPDATE payments SET payout_status='released', released_at=NOW()
+                 WHERE booking_id=? AND status='paid' AND payout_status='held'"
+            )->execute([$id]);
+
+            $info = db()->prepare('SELECT parent_id, nanny_id, date_time FROM bookings WHERE id=?');
+            $info->execute([$id]);
+            if ($b = $info->fetch()) {
+                notify((int) $b['nanny_id'], 'Payment released',
+                    'Your booking on ' . date('D d M, H:i', strtotime($b['date_time']))
+                        . ' was auto-confirmed after 48 hours and payment has been released to you.',
+                    'nanny/earnings.php');
+            }
+        }
+    } catch (Throwable) {
+        // Escrow columns may not exist yet on older schemas — ignore until migrate_v4 runs.
+    }
 }
 
 function show_alert(string $type, string $message): string

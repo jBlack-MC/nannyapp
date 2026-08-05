@@ -8,18 +8,54 @@ if ($userId <= 0) {
     redirect('admin/users.php');
 }
 
-$user = db()->prepare(
+// Column/table introspection so this page still works on databases that
+// haven't run every migration yet (v2 added nanny_profiles.languages etc.,
+// v4 added the admin_profiles table).
+$hasAdminProfiles = false;
+try {
+    $hasAdminProfiles = (bool) db()->query("SHOW TABLES LIKE 'admin_profiles'")->fetchColumn();
+} catch (Throwable) {}
+
+$npCols = [];
+try {
+    foreach (db()->query('SHOW COLUMNS FROM nanny_profiles')->fetchAll(PDO::FETCH_COLUMN) as $c) {
+        $npCols[strtolower((string) $c)] = true;
+    }
+} catch (Throwable) {}
+$npCol = static function (string $name) use ($npCols): string {
+    return isset($npCols[strtolower($name)]) ? "np.$name" : 'NULL';
+};
+
+$ppCols = [];
+try {
+    foreach (db()->query('SHOW COLUMNS FROM parent_profiles')->fetchAll(PDO::FETCH_COLUMN) as $c) {
+        $ppCols[strtolower((string) $c)] = true;
+    }
+} catch (Throwable) {}
+$ppCol = static function (string $name) use ($ppCols): string {
+    return isset($ppCols[strtolower($name)]) ? "pp.$name" : 'NULL';
+};
+
+$sql =
     "SELECT
         u.id, u.full_name, u.email, u.role, u.status, u.profile_image, u.created_at,
-        np.verification_status, np.experience_years, np.hourly_rate, np.location,
-        np.skills, np.languages, np.qualifications, np.specialisations, np.bio, np.availability,
-        pp.emergency_contact_name, pp.emergency_contact, pp.emergency_contact_relationship, pp.number_of_children
+        np.verification_status, np.experience_years, np.hourly_rate, np.location, np.skills, np.bio, np.availability,
+        " . $npCol('languages') . " AS languages,
+        " . $npCol('qualifications') . " AS qualifications,
+        " . $npCol('specialisations') . " AS specialisations,
+        pp.emergency_contact, pp.number_of_children,
+        " . $ppCol('emergency_contact_name') . " AS emergency_contact_name,
+        " . $ppCol('emergency_contact_relationship') . " AS emergency_contact_relationship"
+        . ($hasAdminProfiles ? ', ap.access_level, ap.department, ap.phone_ext, ap.notes AS admin_notes'
+                              : ', NULL AS access_level, NULL AS department, NULL AS phone_ext, NULL AS admin_notes') . "
      FROM users u
      LEFT JOIN nanny_profiles np ON np.user_id = u.id
-     LEFT JOIN parent_profiles pp ON pp.user_id = u.id
+     LEFT JOIN parent_profiles pp ON pp.user_id = u.id"
+     . ($hasAdminProfiles ? ' LEFT JOIN admin_profiles ap ON ap.user_id = u.id' : '') . "
      WHERE u.id = ?
-     LIMIT 1"
-);
+     LIMIT 1";
+
+$user = db()->prepare($sql);
 $user->execute([$userId]);
 $u = $user->fetch();
 
@@ -207,6 +243,21 @@ require __DIR__ . '/../includes/header.php';
         <div><strong>Contact Name</strong><div class="muted"><?= e((string)($u['emergency_contact_name'] ?: 'Not set')) ?></div></div>
         <div><strong>Relationship</strong><div class="muted"><?= e((string)($u['emergency_contact_relationship'] ?: 'Not set')) ?></div></div>
     </div>
+</div>
+<?php elseif ($u['role'] === 'admin'): ?>
+<div class="card section stack">
+    <h3>Admin profile details</h3>
+    <div class="grid grid-2">
+        <div><strong>Access level</strong><div class="muted"><?= e(ucfirst(str_replace('_', ' ', (string)($u['access_level'] ?: 'support')))) ?></div></div>
+        <div><strong>Department</strong><div class="muted"><?= e((string)($u['department'] ?: 'Not set')) ?></div></div>
+        <div><strong>Phone extension</strong><div class="muted"><?= e((string)($u['phone_ext'] ?: 'Not set')) ?></div></div>
+    </div>
+    <?php if (!empty($u['admin_notes'])): ?>
+        <div>
+            <strong>Internal notes</strong>
+            <p class="muted"><?= e((string)$u['admin_notes']) ?></p>
+        </div>
+    <?php endif; ?>
 </div>
 <?php endif; ?>
 

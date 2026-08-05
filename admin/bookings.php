@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/config.php';
 require_role('admin');
 
 $status = $_GET['status'] ?? '';
-$valid  = ['pending', 'confirmed', 'completed', 'rejected', 'cancelled'];
+$valid  = ['pending', 'confirmed', 'in_progress', 'disputed', 'completed', 'rejected', 'cancelled'];
 
 $sql = "SELECT b.id, b.date_time, b.duration, b.status, b.location,
                p.full_name AS parent_name, n.full_name AS nanny_name,
@@ -30,7 +30,7 @@ require __DIR__ . '/../includes/header.php';
     <div class="filter-chips">
         <a class="chip <?= $status === '' ? 'active' : '' ?>" href="<?= url('admin/bookings.php') ?>">All</a>
         <?php foreach ($valid as $s): ?>
-            <a class="chip <?= $status === $s ? 'active' : '' ?>" href="<?= url('admin/bookings.php?status=' . $s) ?>"><?= ucfirst($s) ?></a>
+            <a class="chip <?= $status === $s ? 'active' : '' ?>" href="<?= url('admin/bookings.php?status=' . $s) ?>"><?= e(ucfirst(str_replace('_', ' ', $s))) ?></a>
         <?php endforeach; ?>
     </div>
 </div>

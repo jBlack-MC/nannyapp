@@ -2,14 +2,17 @@
 require_once __DIR__ . '/../config/config.php';
 require_role('nanny');
 
+auto_release_stale_payments();
+
 $me = current_user()['id'];
 
-// All-time totals
+// All-time totals. "released" = confirmed by the parent (or auto-released) and
+// actually payable; "held" = charged but still in escrow for a job in progress.
 $totals = db()->prepare(
     "SELECT
-        IFNULL(SUM(CASE WHEN pay.status='paid' AND b.status='completed' THEN pay.amount END), 0) AS total_earned,
-        IFNULL(SUM(CASE WHEN pay.status='pending' THEN pay.amount END), 0) AS pending,
-        COUNT(CASE WHEN pay.status='paid' AND b.status='completed' THEN 1 END) AS paid_jobs,
+        IFNULL(SUM(CASE WHEN pay.payout_status='released' THEN pay.amount END), 0) AS total_earned,
+        IFNULL(SUM(CASE WHEN pay.payout_status='held' THEN pay.amount END), 0) AS held,
+        COUNT(CASE WHEN pay.payout_status='released' THEN 1 END) AS paid_jobs,
         COUNT(DISTINCT MONTH(pay.created_at)) AS active_months
      FROM payments pay JOIN bookings b ON b.id=pay.booking_id
      WHERE b.nanny_id=?"
@@ -21,8 +24,8 @@ $t = $totals->fetch();
 $monthly = db()->prepare(
     "SELECT DATE_FORMAT(pay.created_at, '%Y-%m') AS ym,
             DATE_FORMAT(pay.created_at, '%b %Y') AS label,
-                        IFNULL(SUM(CASE WHEN pay.status='paid' AND b.status='completed' THEN pay.amount END), 0) AS earned,
-                        COUNT(CASE WHEN pay.status='paid' AND b.status='completed' THEN 1 END) AS jobs
+                        IFNULL(SUM(CASE WHEN pay.payout_status='released' THEN pay.amount END), 0) AS earned,
+                        COUNT(CASE WHEN pay.payout_status='released' THEN 1 END) AS jobs
      FROM payments pay JOIN bookings b ON b.id=pay.booking_id
      WHERE b.nanny_id=?
        AND pay.created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
@@ -35,7 +38,7 @@ $maxEarning = max(array_column($months, 'earned') ?: [1]);
 
 // Recent completed bookings with payment
 $recent = db()->prepare(
-    "SELECT b.date_time, b.duration, b.location, pay.amount, pay.status AS pay_status,
+    "SELECT b.date_time, b.duration, b.location, pay.amount, pay.payout_status AS pay_status,
             u.full_name AS parent_name
      FROM bookings b
      JOIN payments pay ON pay.booking_id = b.id
@@ -50,7 +53,7 @@ $recentRows = $recent->fetchAll();
 $thisMonth = db()->prepare(
     "SELECT IFNULL(SUM(pay.amount),0)
      FROM payments pay JOIN bookings b ON b.id=pay.booking_id
-    WHERE b.nanny_id=? AND pay.status='paid' AND b.status='completed'
+    WHERE b.nanny_id=? AND pay.payout_status='released'
        AND MONTH(pay.created_at)=MONTH(NOW()) AND YEAR(pay.created_at)=YEAR(NOW())"
 );
 $thisMonth->execute([$me]);
@@ -81,8 +84,8 @@ require __DIR__ . '/../includes/header.php';
         <span>This month</span>
     </div>
     <div class="card earn-stat">
-        <b>R<?= number_format((float)$t['pending'], 0) ?></b>
-        <span>Pending</span>
+        <b>R<?= number_format((float)$t['held'], 0) ?></b>
+        <span>Held in escrow</span>
     </div>
     <div class="card earn-stat">
         <b><?= (int)$t['paid_jobs'] ?></b>
