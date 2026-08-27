@@ -2,7 +2,7 @@
 
 A three-role childcare booking marketplace connecting **parents** with verified **nannies**, moderated by an **admin**. Built with plain PHP 8 and MySQL — no framework, no Composer, no build step. Runs on XAMPP out of the box. Also ships as an installable PWA and a Cordova-wrapped Android APK.
 
-**Module:** WEDE6021 — Web Development
+**Module:**XISD6329 — Work Integrated learning 3B
 
 ---
 # Nanny-App – Childcare Booking and Management System
